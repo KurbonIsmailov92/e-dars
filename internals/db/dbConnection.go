@@ -1,20 +1,29 @@
 package db
 
 import (
+	"e-dars/configs"
+	"fmt"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"os"
 )
 
-var session *gorm.DB
+var dbSession *gorm.DB
 
 func ConnectToDb() error {
-	connectionString := "host=localhost port=5432 user=kurbon dbname=e-dars_db password=ismoil"
+	connectionString := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",
+		configs.AppSettings.PostgresParams.Host,
+		configs.AppSettings.PostgresParams.User,
+		os.Getenv("DB_PASSWORD"),
+		configs.AppSettings.PostgresParams.Database,
+		configs.AppSettings.PostgresParams.Port)
+
 	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
 		return err
 	}
-	session = db
+	dbSession = db
 	return nil
 }
 
@@ -23,5 +32,5 @@ func CloseDbConnection() error {
 }
 
 func GetDbConnection() *gorm.DB {
-	return session
+	return dbSession
 }

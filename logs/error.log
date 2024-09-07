@@ -1,0 +1,13 @@
+ERROR: 2024/09/07 16:04:09 users.go:18: [repository.GetUserByUsernameAndPassword] error getting user by username and password: ОШИБКА: в элементе предложения FROM неверная ссылка на таблицу "users" (SQLSTATE 42P01)
+ERROR: 2024/09/07 16:05:08 users.go:18: [repository.GetUserByUsernameAndPassword] error getting user by username and password: roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:06:50 users.go:18: [repository.GetUserByUsernameAndPassword] error getting user by username and password: roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:09:40 users.go:18: [repository.GetUserByUsernameAndPassword] error getting user by username and password: roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:10:26 users.go:18: [repository.GetUserByUsernameAndPassword] error getting user by username and password: ОШИБКА: в элементе предложения FROM неверная ссылка на таблицу "users" (SQLSTATE 42P01)
+ERROR: 2024/09/07 16:11:37 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: ОШИБКА: ошибка синтаксиса (примерное положение: "ON") (SQLSTATE 42601)
+ERROR: 2024/09/07 16:13:20 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: ОШИБКА: столбец roles.user_id не существует (SQLSTATE 42703)
+ERROR: 2024/09/07 16:15:36 users.go:20: [repository.GetUserByUsernameAndPassword] error getting user by username and password: roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:31:44 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: Roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:32:35 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: Roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:32:50 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/07 16:34:55 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: Roles: unsupported relations for schema User
+ERROR: 2024/09/07 16:35:35 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: Roles: unsupported relations for schema User
