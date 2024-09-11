@@ -15,8 +15,7 @@ type User struct {
 	IsDeleted     bool      `gorm:"default:false" json:"is_deleted"`
 	Email         string    `gorm:"size:255;unique;" json:"email"`
 	Phone         string    `gorm:"size:20;unique;" json:"phone"`
-	RoleCode      string    `gorm:"size:20;" json:"role_code"`
-	Role          Role      `gorm:"foreignKey:RoleCode" json:"role"`
+	Roles         []Role    `gorm:"many2many:user_roles" json:"roles"`
 	GroupID       uint      `gorm:"default null" json:"group_id"`
 	Group         Group     `gorm:"foreignKey:GroupID" json:"group"`
 }

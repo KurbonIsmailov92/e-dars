@@ -20,7 +20,7 @@ func GetUserByUsernameAndPassword(username string, password string) (user models
 		return user, translateError(err)
 
 	}
-	fmt.Println("Role is:", user.Role)
+	fmt.Println("Role is:", user.Roles)
 	return user, nil
 }
 

@@ -4,8 +4,6 @@ import (
 	"e-dars/configs"
 	"e-dars/internals/db"
 	"e-dars/logger"
-	"e-dars/pkg/repository"
-	"fmt"
 	"github.com/joho/godotenv"
 	"log"
 )
@@ -39,5 +37,8 @@ func main() {
 		log.Fatalf("Ошибка миграции базы данных: %s", err)
 	}
 
-	fmt.Println(repository.GetUserByUsernameAndPassword("vasya", "1234"))
+	if err := db.InsertSeeds(); err != nil {
+		log.Fatalf("Ошибка при загрузке первичных данных: %s", err)
+	}
+
 }

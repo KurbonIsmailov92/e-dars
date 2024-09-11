@@ -11,3 +11,6 @@ ERROR: 2024/09/07 16:32:35 users.go:19: [repository.GetUserByUsernameAndPassword
 ERROR: 2024/09/07 16:32:50 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
 ERROR: 2024/09/07 16:34:55 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: Roles: unsupported relations for schema User
 ERROR: 2024/09/07 16:35:35 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: Roles: unsupported relations for schema User
+ERROR: 2024/09/11 12:25:31 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/11 12:45:29 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/11 12:53:50 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
