@@ -32,13 +32,13 @@ func InsertSeeds() error {
 		groups = append(groups, models.Group{CodeName: fmt.Sprintf("%dД", i)})
 	}
 
-	if err := GetDbConnection().Create(&roles).Error; err != nil {
+	if err := GetDBConnection().Save(&roles).Error; err != nil {
 		return err
 	}
-	if err := GetDbConnection().Create(&marks).Error; err != nil {
+	if err := GetDBConnection().Save(&marks).Error; err != nil {
 		return err
 	}
-	if err := GetDbConnection().Create(&groups).Error; err != nil {
+	if err := GetDBConnection().Save(&groups).Error; err != nil {
 		return err
 	}
 

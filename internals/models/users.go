@@ -14,8 +14,21 @@ type User struct {
 	IsActive      bool      `gorm:"default:true" json:"is_active"`
 	IsDeleted     bool      `gorm:"default:false" json:"is_deleted"`
 	Email         string    `gorm:"size:255;unique;" json:"email"`
-	Phone         string    `gorm:"size:20;unique;" json:"phone"`
-	Roles         []Role    `gorm:"many2many:user_roles" json:"roles"`
-	GroupID       uint      `gorm:"default null" json:"group_id"`
+	Phone         *string   `gorm:"size:20;default null;" json:"phone"`
+	RoleCode      string    `gorm:"role_code" json:"role_code"`
+	Role          Role      `gorm:"foreignKey:RoleCode" json:"role"`
+	GroupID       *uint     `gorm:"default null" json:"group_id"`
 	Group         Group     `gorm:"foreignKey:GroupID" json:"group"`
+}
+
+type SwagUser struct {
+	FullName string `json:"full_name"`
+	Username string `json:"username" gorm:"unique"`
+	Password string `json:"password" gorm:"not null"`
+	RoleCode string `json:"role_code" gorm:"not null"`
+}
+
+type SignInInput struct {
+	Username string `json:"username" gorm:"unique"`
+	Password string `json:"password" gorm:"not null"`
 }

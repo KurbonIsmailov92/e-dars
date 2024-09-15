@@ -50,7 +50,3 @@ func ParseToken(tokenString string) (*CustomClaims, error) {
 
 	return nil, fmt.Errorf("invalid token")
 }
-
-/*
-
- */

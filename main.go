@@ -1,15 +1,33 @@
 package main
 
 import (
+	"context"
 	"e-dars/configs"
 	"e-dars/internals/db"
 	"e-dars/logger"
+	"e-dars/pkg/controllers"
+	"e-dars/server"
+	"fmt"
 	"github.com/joho/godotenv"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
-func main() {
+// @title E-dars API
+// @version 1.0
+// @description API Server for E-dars Application
 
+// @host localhost:8080
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
+func main() {
 	if err := godotenv.Load(".env"); err != nil {
 		log.Fatalf("Ошибка загрузки .env файла: %s", err)
 	}
@@ -19,26 +37,50 @@ func main() {
 	}
 
 	if err := logger.Init(); err != nil {
-		log.Fatalf("Ошибка инициализации логирования: %s", err)
+		log.Fatalf("Ошибка инициализации логгера: %s", err)
 	}
 
-	if err := db.ConnectToDb(); err != nil {
+	var err error
+	err = db.ConnectToDb()
+	if err != nil {
 		log.Fatalf("Ошибка подключения к базе данных: %s", err)
 	}
 
-	defer func() {
-		err := db.CloseDbConnection()
-		if err != nil {
-			log.Fatalf("Ошибка при закрытии сессии с базой данных: %s", err)
-		}
-	}()
-
-	if err := db.MigrateTables(); err != nil {
+	if err = db.MigrateTables(); err != nil {
 		log.Fatalf("Ошибка миграции базы данных: %s", err)
 	}
 
-	if err := db.InsertSeeds(); err != nil {
-		log.Fatalf("Ошибка при загрузке первичных данных: %s", err)
+	if err = db.InsertSeeds(); err != nil {
+		log.Fatalf("Ошибка при загрузки необходимых данных в таблицы: %s", err)
 	}
 
+	mainServer := new(server.Server)
+	go func() {
+		if err = mainServer.Run(configs.AppSettings.AppParams.PortRun, controllers.InitRoutes()); err != nil {
+			log.Fatalf("Ошибка при запуске HTTP сервера: %s", err)
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	if sqlDB, err := db.GetDBConnection().DB(); err == nil {
+		if err := sqlDB.Close(); err != nil {
+			log.Fatalf("Ошибка при закрытии соединения с БД: %s", err)
+		}
+	} else {
+		log.Fatalf("Ошибка при получении *sql.DB из GORM: %s", err)
+	}
+	fmt.Println("Соединение с БД успешно закрыто")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err = mainServer.Shutdown(ctx); err != nil {
+		log.Fatalf("Ошибка при завершении работы сервера: %s", err)
+	}
+
+	fmt.Println("HTTP-сервис успешно выключен")
+	fmt.Println("Конец завершения программы")
 }
