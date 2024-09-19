@@ -64,3 +64,6 @@ ERROR: 2024/09/14 17:03:15 users.go:18: [repository.GetUserByUsernameAndPassword
 ERROR: 2024/09/15 16:06:19 users.go:38: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
 ERROR: 2024/09/15 16:06:19 users.go:46: [repository.CreateUser] cannot create user. Error is: ОШИБКА: INSERT или UPDATE в таблице "users" нарушает ограничение внешнего ключа "fk_users_role" (SQLSTATE 23503)
 ERROR: 2024/09/15 16:09:59 users.go:38: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/16 00:27:44 users.go:39: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/16 00:27:44 users.go:47: [repository.CreateUser] cannot create user. Error is: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "uni_users_email" (SQLSTATE 23505)
+ERROR: 2024/09/16 00:28:55 users.go:39: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found

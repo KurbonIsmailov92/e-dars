@@ -27,9 +27,9 @@ func InitRoutes() *gin.Engine {
 		usersG.GET("", GetAllUsers)
 		usersG.GET(":id", GetUserByID)
 		usersG.POST("", CreateNewUser)
-		//usersG.PUT(":id", UpdateUser)
-		//usersG.PATCH(":id", DeActivateUser)
-		//usersG.PATCH(":id/active", ActivateUser)
+		usersG.PUT(":id", UpdateUser)
+		usersG.PATCH(":id", DeActivateUser)
+		usersG.PATCH("active:id", ActivateUser)
 
 	}
 

@@ -42,3 +42,31 @@ func GetUserByID(id int) (user models.User, err error) {
 	}
 	return user, nil
 }
+
+func UpdateUser(id int, user models.User) error {
+	existUser, err := repository.GetUserByID(id)
+	if err != nil {
+		return err
+	}
+	user.Username = existUser.Username
+	user.Password = existUser.Password
+
+	if err = repository.UpdateUser(id, user, existUser); err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeActiveUser(id int) error {
+	if err := repository.DeActiveUserByID(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ActivateUser(id int) error {
+	if err := repository.ActiveUserByID(id); err != nil {
+		return err
+	}
+	return nil
+}

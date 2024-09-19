@@ -586,3 +586,61 @@ Error #01: http: wrote more than the declared Content-Length
 [GIN] 2024/09/15 - 16:27:52 | 200 |      1.0875ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
 [GIN] 2024/09/15 - 16:27:52 | 200 |            0s |             ::1 | GET      "/swagger/doc.json"
 [GIN] 2024/09/15 - 16:27:52 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN] 2024/09/16 - 00:10:26 | 200 |      1.0694ms |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/16 - 00:10:26 | 200 |       999.8µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/16 - 00:10:26 | 200 |       999.8µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/16 - 00:10:26 | 200 |     23.9788ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/16 - 00:10:26 | 200 |       880.7µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/16 - 00:10:26 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/16 - 00:11:06 | 200 |     24.4545ms |             ::1 | POST     "/auth/sign-in"
+[GIN] 2024/09/16 - 00:11:39 | 200 |     15.6331ms |             ::1 | GET      "/users"
+[GIN] 2024/09/16 - 00:14:40 | 200 |       6.705ms |             ::1 | PUT      "/users/1"
+[GIN] 2024/09/16 - 00:14:59 | 200 |      1.5573ms |             ::1 | GET      "/users"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN] 2024/09/16 - 00:24:35 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/16 - 00:24:35 | 200 |       504.3µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/16 - 00:24:35 | 200 |       504.5µs |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/16 - 00:24:35 | 200 |         505µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/16 - 00:24:36 | 200 |       178.4µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/16 - 00:24:36 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/16 - 00:25:20 | 401 |       999.7µs |             ::1 | GET      "/users"
+[GIN] 2024/09/16 - 00:26:15 | 200 |      6.5758ms |             ::1 | POST     "/auth/sign-in"
+[GIN] 2024/09/16 - 00:26:41 | 200 |      6.8244ms |             ::1 | GET      "/users"
+[GIN] 2024/09/16 - 00:27:44 | 500 |     14.4576ms |             ::1 | POST     "/auth/sign-up"
+[GIN] 2024/09/16 - 00:28:55 | 201 |     14.5137ms |             ::1 | POST     "/auth/sign-up"
+[GIN] 2024/09/16 - 00:29:33 | 200 |      1.5604ms |             ::1 | POST     "/auth/sign-in"
+[GIN] 2024/09/16 - 00:30:05 | 403 |      1.6447ms |             ::1 | GET      "/users"
+[GIN] 2024/09/16 - 00:30:18 | 403 |            0s |             ::1 | POST     "/users"
+[GIN] 2024/09/16 - 00:30:35 | 403 |            0s |             ::1 | GET      "/users/2"
+[GIN] 2024/09/16 - 00:31:00 | 403 |            0s |             ::1 | PUT      "/users/1"

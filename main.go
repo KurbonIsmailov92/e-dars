@@ -7,7 +7,6 @@ import (
 	"e-dars/logger"
 	"e-dars/pkg/controllers"
 	"e-dars/server"
-	"fmt"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -72,7 +71,6 @@ func main() {
 	} else {
 		log.Fatalf("Ошибка при получении *sql.DB из GORM: %s", err)
 	}
-	fmt.Println("Соединение с БД успешно закрыто")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -81,6 +79,4 @@ func main() {
 		log.Fatalf("Ошибка при завершении работы сервера: %s", err)
 	}
 
-	fmt.Println("HTTP-сервис успешно выключен")
-	fmt.Println("Конец завершения программы")
 }

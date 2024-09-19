@@ -17,7 +17,7 @@ import (
 // @ID create-user
 // @Accept json
 // @Produce json
-// @Param input body models.SwagUser true "new operation info"
+// @Param input body models.SwagUser true "New User info"
 // @Success 200 {object} defaultResponse
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
@@ -49,7 +49,7 @@ func CreateNewUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"message": "user created successfully",
+		"message": "User created successfully",
 	})
 
 }
@@ -71,6 +71,14 @@ func GetAllUsers(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusNoContent, gin.H{"massage": "No users found"})
 	}
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to see all users",
+		})
+		return
+	}
+
 	logger.Info.Printf("[controllers] Successfully got all users: %v", users)
 	c.JSON(http.StatusOK, gin.H{"users": users})
 }
@@ -82,7 +90,7 @@ func GetAllUsers(c *gin.Context) {
 // @Description get user by ID
 // @ID get-user-by-id
 // @Produce json
-// @Param id path integer true "id of the operation"
+// @Param id path integer true "id of the user"
 // @Success 200 {object} models.User
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
@@ -90,6 +98,14 @@ func GetAllUsers(c *gin.Context) {
 // @Router /users/{id} [get]
 func GetUserByID(c *gin.Context) {
 	var user models.User
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to see user",
+		})
+		return
+	}
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		logger.Error.Printf("[controllers] Entered wrong id: %v", err)
@@ -103,4 +119,96 @@ func GetUserByID(c *gin.Context) {
 	}
 	logger.Info.Printf("[controllers] Successfully got user: %v", user)
 	c.JSON(http.StatusOK, gin.H{"user": user})
+}
+
+// UpdateUser
+// @Summary Update user by ID
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Update user by ID
+// @ID update-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Param input body models.SwagUser true "User info"
+// @Success 200 {object} models.User
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/{id} [put]
+func UpdateUser(c *gin.Context) {
+	var user models.User
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to update user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	if err = c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad Request"})
+		return
+	}
+
+	user.ID = uint(id)
+
+	err = service.UpdateUser(id, user)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"massage": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully updated user: %v", user)
+	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully!"})
+}
+
+func DeActivateUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to deactivate user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.DeActiveUser(id); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully deactivated user: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "User deactivated!"})
+}
+
+func ActivateUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to activate user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.ActivateUser(id); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully activated user: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "User activated!"})
 }

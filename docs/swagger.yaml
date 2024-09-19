@@ -223,7 +223,7 @@ paths:
       description: create new user
       operationId: create-user
       parameters:
-      - description: new operation info
+      - description: New User info
         in: body
         name: input
         required: true
@@ -258,7 +258,7 @@ paths:
       description: get user by ID
       operationId: get-user-by-id
       parameters:
-      - description: id of the operation
+      - description: id of the user
         in: path
         name: id
         required: true
@@ -285,6 +285,47 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get User By ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update user by ID
+      operationId: update-user
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update user by ID
       tags:
       - users
 securityDefinitions:
