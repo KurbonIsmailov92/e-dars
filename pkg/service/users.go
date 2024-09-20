@@ -35,7 +35,7 @@ func GetAllUsers() (users []models.User, err error) {
 	return users, nil
 }
 
-func GetUserByID(id int) (user models.User, err error) {
+func GetUserByID(id uint) (user models.User, err error) {
 	user, err = repository.GetUserByID(id)
 	if err != nil {
 		return user, err
@@ -43,7 +43,7 @@ func GetUserByID(id int) (user models.User, err error) {
 	return user, nil
 }
 
-func UpdateUser(id int, user models.User) error {
+func UpdateUser(id uint, user models.User) error {
 	existUser, err := repository.GetUserByID(id)
 	if err != nil {
 		return err

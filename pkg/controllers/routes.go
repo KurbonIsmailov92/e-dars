@@ -38,6 +38,7 @@ func InitRoutes() *gin.Engine {
 	{
 		classesG.POST("", CreateNewClass)
 		classesG.GET("", GetAllClasses)
+		classesG.POST("/set", SetClassTeacher)
 
 	}
 

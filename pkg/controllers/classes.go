@@ -69,7 +69,7 @@ func GetAllClasses(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
 		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see all users",
+			"error": "You do not have permission to see all classes",
 		})
 		return
 	}
@@ -81,4 +81,42 @@ func GetAllClasses(c *gin.Context) {
 
 	logger.Info.Printf("[controllers] Successfully got all classes: %v", classes)
 	c.JSON(http.StatusOK, gin.H{"classes": classes})
+}
+
+// SetClassTeacher
+// @Summary Set Class to Teacher
+// @Security ApiKeyAuth
+// @Tags classes
+// @Description Set Class to Teacher
+// @ID set-class-to-teacher
+// @Accept json
+// @Produce json
+// @Param input body models.ClassUser true "Info for setting"
+// @Success 200 {array} models.Class
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /classes/set [post]
+func SetClassTeacher(c *gin.Context) {
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to set classes to teachers",
+		})
+		return
+	}
+
+	var set models.ClassUser
+
+	if err := c.BindJSON(&set); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad Request"})
+		return
+	}
+
+	if err := service.SetClassTeacher(set.ClassID, set.UserID); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"massage": err.Error()})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully set class to teacher")
+	c.JSON(http.StatusCreated, gin.H{"message": "Class set successfully to teacher"})
+
 }

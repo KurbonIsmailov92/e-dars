@@ -65,7 +65,7 @@ func GetAllUsers() (users []models.User, err error) {
 	return users, nil
 }
 
-func GetUserByID(id int) (user models.User, err error) {
+func GetUserByID(id uint) (user models.User, err error) {
 	user = models.User{}
 	err = db.GetDBConnection().
 		Where("id = ?", id).
@@ -79,7 +79,7 @@ func GetUserByID(id int) (user models.User, err error) {
 	return user, nil
 }
 
-func UpdateUser(id int, user, existUser models.User) error {
+func UpdateUser(id uint, user, existUser models.User) error {
 	if err := db.GetDBConnection().
 		Model(&existUser).
 		Updates(user).

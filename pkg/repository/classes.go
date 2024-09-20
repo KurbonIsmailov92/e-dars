@@ -6,12 +6,12 @@ import (
 	"e-dars/logger"
 )
 
-func SetClassTeacher(classID uint, teacher []models.User) error {
+func SetClassTeacher(classID, teacherID uint) error {
 	if err := db.GetDBConnection().
-		Set("class_id = ?", classID).
-		Set("user_id = ?", teacher).
-		Error; err != nil {
-		logger.Error.Printf("Error setting class teacher id to: %v", err)
+		Table("class_users").
+		Create(&models.ClassUser{ClassID: classID,
+			UserID: teacherID}).Error; err != nil {
+		logger.Error.Printf("[repository SetClassTeacher] Failed to set teacher for class: %v", err)
 		return err
 	}
 	return nil
@@ -64,4 +64,15 @@ func GetAllClasses() (classes []models.Class, err error) {
 		return nil, err
 	}
 	return classes, nil
+}
+
+func GetClassByID(classID uint) (class models.Class, err error) {
+	err = db.GetDBConnection().
+		Where("id = ?", classID).
+		First(&class).Error
+	if err != nil {
+		logger.Error.Printf("[repository.GetClassByID] Error getting class by name: %v\n", err)
+		return class, translateError(err)
+	}
+	return class, nil
 }

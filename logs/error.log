@@ -71,3 +71,16 @@ ERROR: 2024/09/20 01:42:47 classes.go:23: [repository.GetClassByName] error gett
 ERROR: 2024/09/20 02:44:18 classes.go:37: [repository GetAllClasses] Error getting all classes: ОШИБКА: таблица "class" отсутствует в предложении FROM (SQLSTATE 42P01)
 ERROR: 2024/09/20 02:47:11 classes.go:39: [repository GetAllClasses] Error getting all classes: class_users: unsupported relations for schema Class
 ERROR: 2024/09/20 09:50:37 classes.go:39: [repository.GetClassByName] error getting class by name: record not found
+ERROR: 2024/09/20 11:45:02 classes.go:50: [repository.GetClassByName] error getting class by name: record not found
+ERROR: 2024/09/20 11:49:45 classes.go:34: [service SetClassTeacher] User is not teacher <nil>
+ERROR: 2024/09/20 11:50:49 classes.go:34: [service SetClassTeacher] User is not teacher <nil>
+ERROR: 2024/09/20 12:32:16 classes.go:34: [service SetClassTeacher] User is not teacher <nil>
+ERROR: 2024/09/20 12:41:47 classes.go:50: [repository.GetClassByName] error getting class by name: record not found
+ERROR: 2024/09/20 12:43:08 classes.go:34: [service SetClassTeacher] User is not teacher
+ERROR: 2024/09/20 12:44:05 classes.go:34: [service SetClassTeacher] User is not teacher
+ERROR: 2024/09/20 12:45:11 classes.go:34: [service SetClassTeacher] User is not teacher
+ERROR: 2024/09/20 13:09:53 classes.go:34: [service SetClassTeacher] User is not teacher
+ERROR: 2024/09/20 13:13:53 classes.go:36: [service SetClassTeacher] User is not teacher
+ERROR: 2024/09/20 13:15:54 classes.go:36: [service SetClassTeacher] User is not teacher
+ERROR: 2024/09/20 13:16:09 classes.go:74: [repository.GetClassByID] Error getting class by name: record not found
+ERROR: 2024/09/20 13:16:09 classes.go:14: [repository SetClassTeacher] Failed to set teacher for class: ОШИБКА: INSERT или UPDATE в таблице "class_users" нарушает ограничение внешнего ключа "fk_class_users_class" (SQLSTATE 23503)

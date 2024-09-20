@@ -3,8 +3,10 @@ package service
 import (
 	"e-dars/errs"
 	"e-dars/internals/models"
+	"e-dars/logger"
 	"e-dars/pkg/repository"
 	"errors"
+	"fmt"
 )
 
 func CreateNewClass(c *models.Class) error {
@@ -21,9 +23,31 @@ func CreateNewClass(c *models.Class) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
 
-	err = repository.SetClassTeacher(c.ID, c.Teacher)
+func SetClassTeacher(classID, teacherID uint) error {
+	teacher, err := repository.GetUserByID(teacherID)
+	fmt.Println(teacher.Role.Name)
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
+		return err
+	}
+	if teacher.Role.Code != "teacher" {
+		logger.Error.Printf("[service SetClassTeacher] User is not teacher")
+		err = errs.ErrUserIsNotTeacher
+		return err
+	}
 
+	class, err := repository.GetClassByID(classID)
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
+		logger.Error.Printf("[service SetClassTeacher] There is no such class")
+		err = errs.ErrClassNotFound
+		return err
+	}
+
+	if err := repository.SetClassTeacher(class.ID, teacher.ID); err != nil {
+		return err
+	}
 	return nil
 }
 
