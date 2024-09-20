@@ -6,12 +6,39 @@ import (
 	"e-dars/logger"
 )
 
-func CreateNewClass(c *models.Class) (err error) {
-	if err = db.GetDBConnection().Create(&c).Error; err != nil {
-		logger.Error.Println("[repository.CreateClass] cannot create class. Error is:", err.Error())
+func SetClassTeacher(classID uint, teacher []models.User) error {
+	if err := db.GetDBConnection().
+		Set("class_id = ?", classID).
+		Set("user_id = ?", teacher).
+		Error; err != nil {
+		logger.Error.Printf("Error setting class teacher id to: %v", err)
+		return err
+	}
+	return nil
+}
+
+func CreateNewClass(class *models.Class) (err error) {
+	tx := db.GetDBConnection().Begin()
+
+	if err = tx.Create(&class).Error; err != nil {
+		logger.Error.Println("[repository.CreateClass] Cannot create class. Error is:", err.Error())
 		return translateError(err)
 	}
 
+	if len(class.Teacher) > 0 {
+		if err = tx.Model(&class).Association("Teacher").Replace(class.Teacher); err != nil {
+			tx.Rollback()
+			logger.Error.Printf("[repository.CreateNewClass] Cannot associate teachers with Error: %v", err.Error())
+			return translateError(err)
+		}
+	}
+
+	if err = tx.Commit().Error; err != nil {
+		logger.Error.Printf("[repository.CreateNewClass] Transaction commit failed: %v", err)
+		return translateError(err)
+	}
+
+	logger.Info.Printf("[repository.CreateNewClass] Successfully created class with teachers")
 	return nil
 }
 

@@ -22,6 +22,8 @@ func CreateNewClass(c *models.Class) error {
 		return err
 	}
 
+	err = repository.SetClassTeacher(c.ID, c.Teacher)
+
 	return nil
 }
 

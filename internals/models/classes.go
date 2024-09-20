@@ -12,5 +12,5 @@ type SwagClass struct {
 	Name            string `gorm:"size:30; not null" json:"name"`
 	Description     string `gorm:"size:255; not null" json:"desc"`
 	ClassroomNumber int    `gorm:"not null" json:"classroom_number"`
-	TeacherID       uint   `gorm:"not null" json:"teacher_id"`
+	TeacherID       []uint `gorm:"not null" json:"teacher_id"`
 }

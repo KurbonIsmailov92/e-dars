@@ -580,7 +580,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "teacher_id": {
-                    "type": "integer"
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },

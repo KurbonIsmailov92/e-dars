@@ -60,7 +60,9 @@ definitions:
       name:
         type: string
       teacher_id:
-        type: integer
+        items:
+          type: integer
+        type: array
     type: object
   models.SwagUser:
     properties:
