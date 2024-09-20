@@ -67,3 +67,6 @@ ERROR: 2024/09/15 16:09:59 users.go:38: [repository.GetUserByUsernameAndPassword
 ERROR: 2024/09/16 00:27:44 users.go:39: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
 ERROR: 2024/09/16 00:27:44 users.go:47: [repository.CreateUser] cannot create user. Error is: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "uni_users_email" (SQLSTATE 23505)
 ERROR: 2024/09/16 00:28:55 users.go:39: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/20 01:42:47 classes.go:23: [repository.GetClassByName] error getting class by name: record not found
+ERROR: 2024/09/20 02:44:18 classes.go:37: [repository GetAllClasses] Error getting all classes: ОШИБКА: таблица "class" отсутствует в предложении FROM (SQLSTATE 42P01)
+ERROR: 2024/09/20 02:47:11 classes.go:39: [repository GetAllClasses] Error getting all classes: class_users: unsupported relations for schema Class

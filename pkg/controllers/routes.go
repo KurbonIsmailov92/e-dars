@@ -33,6 +33,14 @@ func InitRoutes() *gin.Engine {
 
 	}
 
+	classesG := router.Group("/classes", checkUserAuthentication)
+
+	{
+		classesG.POST("", CreateNewClass)
+		classesG.GET("", GetAllClasses)
+
+	}
+
 	return router
 }
 

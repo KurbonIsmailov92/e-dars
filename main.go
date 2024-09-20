@@ -1,18 +1,13 @@
 package main
 
 import (
-	"context"
 	"e-dars/configs"
 	"e-dars/internals/db"
 	"e-dars/logger"
-	"e-dars/pkg/controllers"
-	"e-dars/server"
+	"e-dars/pkg/repository"
+	"fmt"
 	"github.com/joho/godotenv"
 	"log"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 // @title E-dars API
@@ -27,6 +22,7 @@ import (
 // @name Authorization
 
 func main() {
+
 	if err := godotenv.Load(".env"); err != nil {
 		log.Fatalf("Ошибка загрузки .env файла: %s", err)
 	}
@@ -48,8 +44,9 @@ func main() {
 	if err = db.MigrateTables(); err != nil {
 		log.Fatalf("Ошибка миграции базы данных: %s", err)
 	}
+	fmt.Println(repository.GetAllClasses())
 
-	if err = db.InsertSeeds(); err != nil {
+	/*if err = db.InsertSeeds(); err != nil {
 		log.Fatalf("Ошибка при загрузки необходимых данных в таблицы: %s", err)
 	}
 
@@ -78,5 +75,5 @@ func main() {
 	if err = mainServer.Shutdown(ctx); err != nil {
 		log.Fatalf("Ошибка при завершении работы сервера: %s", err)
 	}
-
+	*/
 }

@@ -15,6 +15,21 @@ definitions:
       message:
         type: string
     type: object
+  models.Class:
+    properties:
+      classroom_number:
+        type: integer
+      desc:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      teacher:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
   models.Group:
     properties:
       code_name:
@@ -35,6 +50,17 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  models.SwagClass:
+    properties:
+      classroom_number:
+        type: integer
+      desc:
+        type: string
+      name:
+        type: string
+      teacher_id:
+        type: integer
     type: object
   models.SwagUser:
     properties:
@@ -159,6 +185,72 @@ paths:
       summary: SignUp
       tags:
       - auth
+  /classes:
+    get:
+      description: get list of all classes
+      operationId: get-all-classes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Class'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get All Classes
+      tags:
+      - classes
+    post:
+      consumes:
+      - application/json
+      description: create new class
+      operationId: create-class
+      parameters:
+      - description: New Class info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagClass'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Class
+      tags:
+      - classes
   /ping:
     get:
       consumes:

@@ -36,7 +36,7 @@ func GetUserByUsername(userName string) (user models.User, err error) {
 		Where("username = ?", userName).
 		First(&user).Error
 	if err != nil {
-		logger.Error.Printf("[repository.GetUserByUsernameAndPassword] error getting user by username and password: %v\n", err)
+		logger.Error.Printf("[repository.GetUserByUsername] error getting user by username: %v\n", err)
 		return user, translateError(err)
 	}
 	return user, nil

@@ -644,3 +644,162 @@ Error #01: http: wrote more than the declared Content-Length
 [GIN] 2024/09/16 - 00:30:18 | 403 |            0s |             ::1 | POST     "/users"
 [GIN] 2024/09/16 - 00:30:35 | 403 |            0s |             ::1 | GET      "/users/2"
 [GIN] 2024/09/16 - 00:31:00 | 403 |            0s |             ::1 | PUT      "/users/1"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /classes                  --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes                  --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN] 2024/09/20 - 01:29:34 | 200 |       908.5µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/20 - 01:29:35 | 200 |        1.09ms |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/20 - 01:29:35 | 200 |         309µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/20 - 01:29:35 | 200 |      8.6751ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/20 - 01:29:35 | 200 |       318.8µs |             ::1 | GET      "/swagger/doc.json"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /classes                  --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes                  --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN] 2024/09/20 - 01:30:55 | 200 |       534.8µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/20 - 01:30:55 | 200 |       998.8µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/20 - 01:30:55 | 200 |      1.3667ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/20 - 01:30:55 | 200 |       505.4µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/20 - 01:30:55 | 200 |       772.8µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/20 - 01:30:55 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/20 - 01:31:04 | 304 |      2.4576ms |             ::1 | GET      "/ping"
+[GIN] 2024/09/20 - 01:31:43 | 200 |      6.6743ms |             ::1 | POST     "/auth/sign-in"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /classes                  --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes                  --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN] 2024/09/20 - 01:40:46 | 200 |       525.5µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/20 - 01:40:46 | 200 |      1.3527ms |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/20 - 01:40:46 | 200 |       340.6µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/20 - 01:40:46 | 200 |     15.8536ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/20 - 01:40:47 | 200 |            0s |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/20 - 01:40:47 | 200 |       552.4µs |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /classes                  --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes                  --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN] 2024/09/20 - 01:41:13 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/20 - 01:41:13 | 200 |       553.5µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/20 - 01:41:13 | 200 |         505µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/20 - 01:41:13 | 200 |      7.0554ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/20 - 01:41:13 | 200 |         207µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/20 - 01:41:13 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/20 - 01:41:37 | 200 |     11.0408ms |             ::1 | POST     "/auth/sign-in"
+[GIN] 2024/09/20 - 01:42:47 | 201 |      5.2077ms |             ::1 | POST     "/classes"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/sign-up             --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/sign-in             --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users                    --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/:id                --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users                    --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/:id                --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/:id                --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/active:id          --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] POST   /classes                  --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes                  --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN] 2024/09/20 - 02:40:19 | 200 |       576.2µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/20 - 02:40:19 | 200 |       490.3µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/20 - 02:40:19 | 200 |      1.9351ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/20 - 02:40:19 | 200 |       650.6µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/20 - 02:40:19 | 200 |       164.4µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/20 - 02:40:19 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/20 - 02:40:42 | 200 |      2.4216ms |             ::1 | POST     "/auth/sign-in"
+[GIN] 2024/09/20 - 02:41:08 | 401 |         167µs |             ::1 | GET      "/classes"
