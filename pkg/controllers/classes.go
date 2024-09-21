@@ -144,7 +144,7 @@ func UpdateClass(c *gin.Context) {
 
 	class.ID = uint(id)
 
-	if err := service.UpdateClass(id, class); err != nil {
+	if err := service.UpdateClass(uint(id), class); err != nil {
 
 	}
 

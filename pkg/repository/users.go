@@ -99,7 +99,7 @@ func DeActiveUserByID(id int) error {
 			"is_active":      false,
 			"deactivated_at": time.Now(),
 		}).Error; err != nil {
-		logger.Error.Printf("[repository] Error deactivating user: %v", err)
+		logger.Error.Printf("[repository DeActivateUserByID] Error deactivating user: %v", err)
 		return err
 	}
 	return nil
@@ -111,9 +111,37 @@ func ActiveUserByID(id int) error {
 		Where("id = ?", id).
 		Updates(map[string]interface{}{
 			"is_active":      true,
-			"deactivated_at": nil, //"0001-01-01 00:00:00",
+			"deactivated_at": nil,
 		}).Error; err != nil {
-		logger.Error.Printf("[repository] Error activating user: %v", err)
+		logger.Error.Printf("[repository ActivateUserByID] Error activating user: %v", err)
+		return err
+	}
+	return nil
+}
+
+func DeleteUserByID(id int) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"is_deleted": true,
+			"deleted_at": time.Now(),
+		}).Error; err != nil {
+		logger.Error.Printf("[repository DeleteUserByID] Error deleting user: %v", err)
+		return err
+	}
+	return nil
+}
+
+func ReturnUserByID(id int) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"is_deleted": false,
+			"deleted_at": nil,
+		}).Error; err != nil {
+		logger.Error.Printf("[repository ReturnUserByID] Error returning user: %v", err)
 		return err
 	}
 	return nil

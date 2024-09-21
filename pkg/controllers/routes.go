@@ -24,20 +24,22 @@ func InitRoutes() *gin.Engine {
 
 	usersG := router.Group("/users", checkUserAuthentication)
 	{
-		usersG.GET("", GetAllUsers)
-		usersG.GET(":id", GetUserByID)
-		usersG.POST("", CreateNewUser)
-		usersG.PUT(":id", UpdateUser)
-		usersG.PATCH(":id", DeActivateUser)
-		usersG.PATCH("active:id", ActivateUser)
+		usersG.GET("/", GetAllUsers)
+		usersG.GET("/:id", GetUserByID)
+		usersG.POST("/", CreateNewUser)
+		usersG.PUT("/:id", UpdateUser)
+		usersG.PATCH("/deactivate/:id", DeActivateUser)
+		usersG.PATCH("/activate/:id", ActivateUser)
+		usersG.DELETE("/delete/:id", DeleteUser)
+		usersG.DELETE("/return/:id", ReturnUser)
 
 	}
 
 	classesG := router.Group("/classes", checkUserAuthentication)
 
 	{
-		classesG.POST("", CreateNewClass)
-		classesG.GET("", GetAllClasses)
+		classesG.POST("/", CreateNewClass)
+		classesG.GET("/", GetAllClasses)
 		classesG.POST("/set", SetClassTeacher)
 
 	}

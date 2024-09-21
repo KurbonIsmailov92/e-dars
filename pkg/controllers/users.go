@@ -168,6 +168,20 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully!"})
 }
 
+// DeActivateUser
+// @Summary Deactivate user by ID
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Deactivate user by ID
+// @ID deactivate-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/deactivate/{id} [patch]
 func DeActivateUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -190,6 +204,20 @@ func DeActivateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User deactivated!"})
 }
 
+// ActivateUser
+// @Summary Activate user by ID
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Activate user by ID
+// @ID activate-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/activate/{id} [patch]
 func ActivateUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -210,4 +238,76 @@ func ActivateUser(c *gin.Context) {
 	}
 	logger.Info.Printf("[controllers] Successfully activated user: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "User activated!"})
+}
+
+// DeleteUser
+// @Summary Delete user by ID
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Delete user by ID
+// @ID delete-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/delete/{id} [delete]
+func DeleteUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to activate user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.DeleteUser(id); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully deleted user: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "User Deleted!"})
+}
+
+// ReturnUser
+// @Summary Return user by ID
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Return user by ID
+// @ID return-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/return/{id} [delete]
+func ReturnUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to activate user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.ReturnUser(id); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully returned user: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "User Returned successfully!"})
 }

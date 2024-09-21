@@ -77,7 +77,7 @@ func GetClassByID(classID uint) (class models.Class, err error) {
 	return class, nil
 }
 
-func UpdateClass(id uint, class, classFromDB *models.Class) (err error) {
+func UpdateClass(id uint, class, classFromDB models.Class) (err error) {
 	if err := db.GetDBConnection().
 		Model(&classFromDB).
 		Updates(class).

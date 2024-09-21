@@ -70,3 +70,17 @@ func ActivateUser(id int) error {
 	}
 	return nil
 }
+
+func DeleteUser(id int) error {
+	if err := repository.DeleteUserByID(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ReturnUser(id int) error {
+	if err := repository.ReturnUserByID(id); err != nil {
+		return err
+	}
+	return nil
+}

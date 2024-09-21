@@ -84,3 +84,6 @@ ERROR: 2024/09/20 13:13:53 classes.go:36: [service SetClassTeacher] User is not 
 ERROR: 2024/09/20 13:15:54 classes.go:36: [service SetClassTeacher] User is not teacher
 ERROR: 2024/09/20 13:16:09 classes.go:74: [repository.GetClassByID] Error getting class by name: record not found
 ERROR: 2024/09/20 13:16:09 classes.go:14: [repository SetClassTeacher] Failed to set teacher for class: ОШИБКА: INSERT или UPDATE в таблице "class_users" нарушает ограничение внешнего ключа "fk_class_users_class" (SQLSTATE 23503)
+ERROR: 2024/09/21 13:19:29 users.go:39: [repository.GetUserByUsername] error getting user by username: record not found
+ERROR: 2024/09/21 13:19:29 users.go:47: [repository.CreateUser] cannot create user. Error is: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "uni_users_email" (SQLSTATE 23505)
+ERROR: 2024/09/21 13:22:15 users.go:39: [repository.GetUserByUsername] error getting user by username: record not found
