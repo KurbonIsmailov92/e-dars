@@ -160,8 +160,7 @@ func UpdateUser(c *gin.Context) {
 
 	user.ID = uint(id)
 
-	err = service.UpdateUser(uint(id), user)
-	if err != nil {
+	if err = service.UpdateUser(uint(id), user); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"massage": "User not found"})
 		return
 	}

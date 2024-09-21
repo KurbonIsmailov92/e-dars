@@ -6,6 +6,7 @@ import (
 	"e-dars/pkg/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 // CreateNewClass
@@ -118,5 +119,33 @@ func SetClassTeacher(c *gin.Context) {
 	}
 	logger.Info.Printf("[controllers] Successfully set class to teacher")
 	c.JSON(http.StatusCreated, gin.H{"message": "Class set successfully to teacher"})
+
+}
+
+func UpdateClass(c *gin.Context) {
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to update user",
+		})
+		return
+	}
+
+	var class models.Class
+	if err := c.BindJSON(&class); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid class ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid class ID"})
+		return
+	}
+
+	class.ID = uint(id)
+
+	if err := service.UpdateClass(id, class); err != nil {
+
+	}
 
 }

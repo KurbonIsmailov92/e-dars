@@ -58,3 +58,10 @@ func GetAllClasses() (classes []models.Class, err error) {
 	}
 	return classes, nil
 }
+
+func UpdateClass(id uint, class *models.Class) (err error) {
+	if err = repository.UpdateClass(id, class); err != nil {
+		return err
+	}
+	return nil
+}

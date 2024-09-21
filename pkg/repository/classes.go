@@ -47,7 +47,7 @@ func GetClassByName(className string) (class models.Class, err error) {
 		Where("name = ?", className).
 		First(&class).Error
 	if err != nil {
-		logger.Error.Printf("[repository.GetClassByName] error getting class by name: %v\n", err)
+		logger.Error.Printf("[repository.GetClassByName] Error getting class by name: %v\n", err)
 		return class, translateError(err)
 	}
 	return class, nil
@@ -75,4 +75,16 @@ func GetClassByID(classID uint) (class models.Class, err error) {
 		return class, translateError(err)
 	}
 	return class, nil
+}
+
+func UpdateClass(id uint, class, classFromDB *models.Class) (err error) {
+	if err := db.GetDBConnection().
+		Model(&classFromDB).
+		Updates(class).
+		Where("id = ?", id).Error; err != nil {
+		logger.Error.Printf("[repository UpdateClass] Error updating class: %v", err)
+		return err
+	}
+
+	return nil
 }

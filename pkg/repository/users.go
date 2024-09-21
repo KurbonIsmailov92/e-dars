@@ -84,7 +84,7 @@ func UpdateUser(id uint, user, existUser models.User) error {
 		Model(&existUser).
 		Updates(user).
 		Where("id = ?", id).Error; err != nil {
-		logger.Error.Printf("[repository] Error updating user: %v", err)
+		logger.Error.Printf("[repository UpdateUser] Error updating user: %v", err)
 		return err
 	}
 
