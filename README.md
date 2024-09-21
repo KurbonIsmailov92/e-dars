@@ -26,3 +26,7 @@ E-Dars — это образовательная платформа, разра�
    git clone https://github.com/KurbonIsmailov92/e-dars.git
    cd e-dars
    ```
+2. Настройте переменные окружения:
+ ```bash
+   cp .env.example .env
+   ```
