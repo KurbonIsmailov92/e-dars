@@ -34,3 +34,19 @@ type SignInInput struct {
 	Username string `json:"username" gorm:"unique"`
 	Password string `json:"password" gorm:"not null"`
 }
+
+type UserPassword struct {
+	OldPassword string `json:"old_password"`
+	Password    string `json:"password" gorm:"not null"`
+}
+
+type SwagUserForUpdateByAdmin struct {
+	FullName  string `json:"full_name"`
+	Username  string `json:"username" gorm:"unique"`
+	RoleCode  string `json:"role_code" gorm:"not null"`
+	Email     string `json:"email" gorm:"size:255;unique;"`
+	Phone     string `json:"phone" gorm:"size:20;"`
+	IsActive  bool   `json:"is_active" gorm:"default:true"`
+	IsDeleted bool   `json:"is_deleted" gorm:"default:false"`
+	GroupID   *uint  `json:"group_id"`
+}

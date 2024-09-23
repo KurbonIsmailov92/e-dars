@@ -3,9 +3,11 @@ package service
 import (
 	"e-dars/errs"
 	"e-dars/internals/models"
+	"e-dars/logger"
 	"e-dars/pkg/repository"
 	"e-dars/utils"
 	"errors"
+	"os"
 )
 
 func CreateNewUser(u *models.User) error {
@@ -57,30 +59,61 @@ func UpdateUser(id uint, user models.User) error {
 	return nil
 }
 
-func DeActiveUser(id int) error {
+func DeActiveUser(id uint) error {
 	if err := repository.DeActiveUserByID(id); err != nil {
 		return err
 	}
 	return nil
 }
 
-func ActivateUser(id int) error {
+func ActivateUser(id uint) error {
 	if err := repository.ActiveUserByID(id); err != nil {
 		return err
 	}
 	return nil
 }
 
-func DeleteUser(id int) error {
+func DeleteUser(id uint) error {
 	if err := repository.DeleteUserByID(id); err != nil {
 		return err
 	}
 	return nil
 }
 
-func ReturnUser(id int) error {
+func ReturnUser(id uint) error {
 	if err := repository.ReturnUserByID(id); err != nil {
 		return err
 	}
+	return nil
+}
+
+func ResetUserPassToDefault(id uint) error {
+	newPassword := utils.GenerateHash(os.Getenv("DEFAULT_USER_PASSWORD"))
+	if err := repository.ResetUserPasswordToDefault(id, newPassword); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ChangeOwnPasswordByUser(id uint, newPassword, oldPassword string) error {
+	user, err := GetUserByID(id)
+	if err != nil {
+		return err
+	}
+
+	oldPassword = utils.GenerateHash(oldPassword)
+
+	if oldPassword != user.Password {
+		logger.Error.Printf("[service ChangeOwnPasswordByUser] Incorrect old password")
+		err = errors.New("incorrect old password")
+		return err
+	}
+
+	newPassword = utils.GenerateHash(newPassword)
+
+	if err = repository.ChangeOwnPasswordByUser(id, newPassword); err != nil {
+		return err
+	}
+
 	return nil
 }

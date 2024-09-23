@@ -10,4 +10,6 @@ type Exam struct {
 	ScheduleID   uint      `gorm:"not_null;column:schedule_note_id" json:"schedule_id"`
 	ScheduleNote Schedule  `gorm:"foreignKey:ScheduleID;references:ID" json:"schedule_note"`
 	Student      []User    `gorm:"many2many:exam_users" json:"student"`
+	IsDeleted    bool      `gorm:"default:false" json:"is_deleted"`
+	DeletedAt    time.Time
 }

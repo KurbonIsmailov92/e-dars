@@ -5,6 +5,7 @@ import (
 	"e-dars/pkg/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -30,7 +31,7 @@ func checkUserAuthentication(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"error": "invalid auth header",
 		})
-		logger.Info.Printf("[controller-midlwere] invalid auth header")
+		logger.Error.Printf("[controller-midlwere] invalid auth header")
 		return
 	}
 
@@ -38,7 +39,7 @@ func checkUserAuthentication(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"error": "token is empty",
 		})
-		logger.Info.Printf("[controller-midlwere] token is empty")
+		logger.Error.Printf("[controller-midlwere] token is empty")
 		return
 	}
 
@@ -47,10 +48,11 @@ func checkUserAuthentication(c *gin.Context) {
 	claims, err := service.ParseToken(accessToken)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
-		logger.Info.Printf("[controller-midlwere] invalid token")
+		logger.Error.Printf("[controller-midlwere] invalid token")
 		return
 	}
-	c.Set(userIDCtx, claims.UserID)
+
+	c.Set(userIDCtx, strconv.Itoa(int(claims.UserID)))
 	c.Set(userRoleCtx, claims.Role)
 	c.Next()
 }

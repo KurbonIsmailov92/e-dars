@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth/sign-in": {
+        "/auth/api/v1/sign-in": {
             "post": {
                 "description": "sign in to account",
                 "consumes": [
@@ -68,7 +68,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/sign-up": {
+        "/auth/api/v1/sign-up": {
             "post": {
                 "description": "create account",
                 "consumes": [
@@ -121,7 +121,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/classes": {
+        "/classes/api/v1/": {
             "get": {
                 "security": [
                     {
@@ -143,7 +143,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Class"
+                                "$ref": "#/definitions/models.SwagClassInfo"
                             }
                         }
                     },
@@ -224,7 +224,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/classes/set": {
+        "/classes/api/v1/set/": {
             "post": {
                 "security": [
                     {
@@ -260,8 +260,73 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Class"
+                                "$ref": "#/definitions/controllers.defaultResponse"
                             }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/classes/api/v1/update/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update class by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "classes"
+                ],
+                "summary": "Update Class",
+                "operationId": "update-class",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of the class",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update class data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.SwagClass"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.defaultResponse"
                         }
                     },
                     "400": {
@@ -327,7 +392,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users": {
+        "/users/api/v1/": {
             "get": {
                 "security": [
                     {
@@ -349,7 +414,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.User"
+                                "$ref": "#/definitions/models.SwagUserForUpdateByAdmin"
                             }
                         }
                     },
@@ -430,14 +495,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/activate/{id}": {
+        "/users/api/v1/change-password": {
             "patch": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Activate user by ID",
+                "description": "Change user` + "`" + `s password to new by User",
                 "consumes": [
                     "application/json"
                 ],
@@ -447,15 +512,17 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Activate user by ID",
-                "operationId": "activate-user",
+                "summary": "Change user` + "`" + `s password to new by User",
+                "operationId": "change-password",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "id of the user",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "description": "User password",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserPassword"
+                        }
                     }
                 ],
                 "responses": {
@@ -486,7 +553,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/deactivate/{id}": {
+        "/users/api/v1/deactivate/{id}": {
             "patch": {
                 "security": [
                     {
@@ -542,7 +609,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/delete/{id}": {
+        "/users/api/v1/delete/{id}": {
             "delete": {
                 "security": [
                     {
@@ -598,25 +665,22 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/return/{id}": {
-            "delete": {
+        "/users/api/v1/reset-password/{id}": {
+            "patch": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Return user by ID",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Reset user` + "`" + `s password to default by ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "users"
                 ],
-                "summary": "Return user by ID",
-                "operationId": "return-user",
+                "summary": "Reset user` + "`" + `s password to default by ID",
+                "operationId": "reset-user-password",
                 "parameters": [
                     {
                         "type": "integer",
@@ -654,7 +718,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{id}": {
+        "/users/api/v1/{id}": {
             "get": {
                 "security": [
                     {
@@ -683,7 +747,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.User"
+                            "$ref": "#/definitions/models.SwagUserForUpdateByAdmin"
                         }
                     },
                     "400": {
@@ -738,7 +802,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.SwagUser"
+                            "$ref": "#/definitions/models.SwagUserForUpdateByAdmin"
                         }
                     }
                 ],
@@ -746,7 +810,61 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.User"
+                            "$ref": "#/definitions/models.SwagUserForUpdateByAdmin"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Return user by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Return user by ID",
+                "operationId": "return-user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of the user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.defaultResponse"
                         }
                     },
                     "400": {
@@ -793,29 +911,6 @@ const docTemplate = `{
             "properties": {
                 "message": {
                     "type": "string"
-                }
-            }
-        },
-        "models.Class": {
-            "type": "object",
-            "properties": {
-                "classroom_number": {
-                    "type": "integer"
-                },
-                "desc": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "teacher": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.User"
-                    }
                 }
             }
         },
@@ -877,6 +972,26 @@ const docTemplate = `{
                 }
             }
         },
+        "models.SwagClassInfo": {
+            "type": "object",
+            "properties": {
+                "classroom_number": {
+                    "type": "integer"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "teacher": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                }
+            }
+        },
         "models.SwagUser": {
             "type": "object",
             "properties": {
@@ -888,6 +1003,35 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "role_code": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SwagUserForUpdateByAdmin": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "group_id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_deleted": {
+                    "type": "boolean"
                 },
                 "phone": {
                     "type": "string"
@@ -949,6 +1093,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserPassword": {
+            "type": "object",
+            "properties": {
+                "old_password": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 }
             }

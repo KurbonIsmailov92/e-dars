@@ -19,7 +19,7 @@ import (
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /auth/sign-up [post]
+// @Router /auth/api/v1/sign-up [post]
 func SignUp(c *gin.Context) {
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {
@@ -48,7 +48,7 @@ func SignUp(c *gin.Context) {
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /auth/sign-in [post]
+// @Router /auth/api/v1/sign-in [post]
 func SignIn(c *gin.Context) {
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {

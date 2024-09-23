@@ -15,21 +15,6 @@ definitions:
       message:
         type: string
     type: object
-  models.Class:
-    properties:
-      classroom_number:
-        type: integer
-      desc:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      teacher:
-        items:
-          $ref: '#/definitions/models.User'
-        type: array
-    type: object
   models.ClassUser:
     properties:
       class_id:
@@ -67,6 +52,19 @@ definitions:
       name:
         type: string
     type: object
+  models.SwagClassInfo:
+    properties:
+      classroom_number:
+        type: integer
+      desc:
+        type: string
+      name:
+        type: string
+      teacher:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
   models.SwagUser:
     properties:
       email:
@@ -75,6 +73,25 @@ definitions:
         type: string
       password:
         type: string
+      phone:
+        type: string
+      role_code:
+        type: string
+      username:
+        type: string
+    type: object
+  models.SwagUserForUpdateByAdmin:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      group_id:
+        type: integer
+      is_active:
+        type: boolean
+      is_deleted:
+        type: boolean
       phone:
         type: string
       role_code:
@@ -117,6 +134,13 @@ definitions:
       username:
         type: string
     type: object
+  models.UserPassword:
+    properties:
+      old_password:
+        type: string
+      password:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -124,7 +148,7 @@ info:
   title: E-dars API
   version: "1.0"
 paths:
-  /auth/sign-in:
+  /auth/api/v1/sign-in:
     post:
       consumes:
       - application/json
@@ -159,7 +183,7 @@ paths:
       summary: SignIn
       tags:
       - auth
-  /auth/sign-up:
+  /auth/api/v1/sign-up:
     post:
       consumes:
       - application/json
@@ -194,7 +218,7 @@ paths:
       summary: SignUp
       tags:
       - auth
-  /classes:
+  /classes/api/v1/:
     get:
       description: get list of all classes
       operationId: get-all-classes
@@ -205,7 +229,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Class'
+              $ref: '#/definitions/models.SwagClassInfo'
             type: array
         "400":
           description: Bad Request
@@ -260,7 +284,7 @@ paths:
       summary: Create Class
       tags:
       - classes
-  /classes/set:
+  /classes/api/v1/set/:
     post:
       consumes:
       - application/json
@@ -280,7 +304,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Class'
+              $ref: '#/definitions/controllers.defaultResponse'
             type: array
         "400":
           description: Bad Request
@@ -297,6 +321,48 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Set Class to Teacher
+      tags:
+      - classes
+  /classes/api/v1/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update class by ID
+      operationId: update-class
+      parameters:
+      - description: id of the class
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update class data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagClass'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Class
       tags:
       - classes
   /ping:
@@ -327,7 +393,7 @@ paths:
       summary: Check Connection
       tags:
       - check
-  /users:
+  /users/api/v1/:
     get:
       description: get list of all users
       operationId: get-all-users
@@ -338,7 +404,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.User'
+              $ref: '#/definitions/models.SwagUserForUpdateByAdmin'
             type: array
         "400":
           description: Bad Request
@@ -393,7 +459,42 @@ paths:
       summary: Create User
       tags:
       - users
-  /users/{id}:
+  /users/api/v1/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Return user by ID
+      operationId: return-user
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Return user by ID
+      tags:
+      - users
     get:
       description: get user by ID
       operationId: get-user-by-id
@@ -409,7 +510,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: '#/definitions/models.SwagUserForUpdateByAdmin'
         "400":
           description: Bad Request
           schema:
@@ -443,14 +544,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/models.SwagUser'
+          $ref: '#/definitions/models.SwagUserForUpdateByAdmin'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: '#/definitions/models.SwagUserForUpdateByAdmin'
         "400":
           description: Bad Request
           schema:
@@ -468,18 +569,19 @@ paths:
       summary: Update user by ID
       tags:
       - users
-  /users/activate/{id}:
+  /users/api/v1/change-password:
     patch:
       consumes:
       - application/json
-      description: Activate user by ID
-      operationId: activate-user
+      description: Change user`s password to new by User
+      operationId: change-password
       parameters:
-      - description: id of the user
-        in: path
-        name: id
+      - description: User password
+        in: body
+        name: input
         required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/models.UserPassword'
       produces:
       - application/json
       responses:
@@ -501,10 +603,10 @@ paths:
             $ref: '#/definitions/controllers.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Activate user by ID
+      summary: Change user`s password to new by User
       tags:
       - users
-  /users/deactivate/{id}:
+  /users/api/v1/deactivate/{id}:
     patch:
       consumes:
       - application/json
@@ -540,7 +642,7 @@ paths:
       summary: Deactivate user by ID
       tags:
       - users
-  /users/delete/{id}:
+  /users/api/v1/delete/{id}:
     delete:
       consumes:
       - application/json
@@ -576,12 +678,10 @@ paths:
       summary: Delete user by ID
       tags:
       - users
-  /users/return/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Return user by ID
-      operationId: return-user
+  /users/api/v1/reset-password/{id}:
+    patch:
+      description: Reset user`s password to default by ID
+      operationId: reset-user-password
       parameters:
       - description: id of the user
         in: path
@@ -609,7 +709,7 @@ paths:
             $ref: '#/definitions/controllers.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Return user by ID
+      summary: Reset user`s password to default by ID
       tags:
       - users
 securityDefinitions:

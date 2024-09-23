@@ -22,7 +22,7 @@ import (
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users [post]
+// @Router /users/api/v1/ [post]
 func CreateNewUser(c *gin.Context) {
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {
@@ -61,11 +61,11 @@ func CreateNewUser(c *gin.Context) {
 // @Description get list of all users
 // @ID get-all-users
 // @Produce json
-// @Success 200 {array} models.User
+// @Success 200 {array} models.SwagUserForUpdateByAdmin
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users [get]
+// @Router /users/api/v1/ [get]
 func GetAllUsers(c *gin.Context) {
 	users, err := service.GetAllUsers()
 	if err != nil {
@@ -91,11 +91,11 @@ func GetAllUsers(c *gin.Context) {
 // @ID get-user-by-id
 // @Produce json
 // @Param id path integer true "id of the user"
-// @Success 200 {object} models.User
+// @Success 200 {object} models.SwagUserForUpdateByAdmin
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/{id} [get]
+// @Router /users/api/v1/{id} [get]
 func GetUserByID(c *gin.Context) {
 	var user models.User
 
@@ -130,12 +130,12 @@ func GetUserByID(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path integer true "id of the user"
-// @Param input body models.SwagUser true "User info"
-// @Success 200 {object} models.User
+// @Param input body models.SwagUserForUpdateByAdmin true "User info"
+// @Success 200 {object} models.SwagUserForUpdateByAdmin
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/{id} [put]
+// @Router /users/api/v1/{id} [put]
 func UpdateUser(c *gin.Context) {
 	var user models.User
 
@@ -160,7 +160,7 @@ func UpdateUser(c *gin.Context) {
 
 	user.ID = uint(id)
 
-	if err = service.UpdateUser(uint(id), user); err != nil {
+	if err = service.UpdateUser(user.ID, user); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"massage": "User not found"})
 		return
 	}
@@ -181,7 +181,7 @@ func UpdateUser(c *gin.Context) {
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/deactivate/{id} [patch]
+// @Router /users/api/v1/deactivate/{id} [patch]
 func DeActivateUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -195,8 +195,9 @@ func DeActivateUser(c *gin.Context) {
 	if err != nil {
 		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+
 	}
-	if err = service.DeActiveUser(id); err != nil {
+	if err = service.DeActiveUser(uint(id)); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
 		return
 	}
@@ -217,7 +218,7 @@ func DeActivateUser(c *gin.Context) {
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/activate/{id} [patch]
+// @Router/users/api/v1/activate/{id} [patch]
 func ActivateUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -232,7 +233,7 @@ func ActivateUser(c *gin.Context) {
 		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
 	}
-	if err = service.ActivateUser(id); err != nil {
+	if err = service.ActivateUser(uint(id)); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
 		return
 	}
@@ -253,7 +254,7 @@ func ActivateUser(c *gin.Context) {
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/delete/{id} [delete]
+// @Router /users/api/v1/delete/{id} [delete]
 func DeleteUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -268,7 +269,7 @@ func DeleteUser(c *gin.Context) {
 		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
 	}
-	if err = service.DeleteUser(id); err != nil {
+	if err = service.DeleteUser(uint(id)); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
 		return
 	}
@@ -289,7 +290,7 @@ func DeleteUser(c *gin.Context) {
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/return/{id} [delete]
+// @Router /users/api/v1/{id} [delete]
 func ReturnUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -304,10 +305,86 @@ func ReturnUser(c *gin.Context) {
 		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
 	}
-	if err = service.ReturnUser(id); err != nil {
+	if err = service.ReturnUser(uint(id)); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
 		return
 	}
 	logger.Info.Printf("[controllers] Successfully returned user: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "User Returned successfully!"})
+}
+
+// ResetUserPasswordByAdmin
+// @Summary Reset user`s password to default by ID
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Reset user`s password to default by ID
+// @ID reset-user-password
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/api/v1/reset-password/{id} [patch]
+func ResetUserPasswordByAdmin(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to activate user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.ResetUserPassToDefault(uint(id)); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully reseted user`s password to default: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "Password reseted successfully!"})
+}
+
+// ChangeOwnPasswordByUser
+// @Summary Change user`s password to new by User
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Change user`s password to new by User
+// @ID change-password
+// @Accept json
+// @Produce json
+// @Param input body models.UserPassword true "User password"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/api/v1/change-password [patch]
+func ChangeOwnPasswordByUser(c *gin.Context) {
+
+	var userPasswords models.UserPassword
+
+	id, err := strconv.Atoi(c.GetString(userIDCtx))
+
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	if err = c.BindJSON(&userPasswords); err != nil {
+		logger.Error.Printf("[controllers] Invalid JSON: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad Request"})
+		return
+	}
+
+	if err = service.ChangeOwnPasswordByUser(uint(id), userPasswords.Password,
+		userPasswords.OldPassword); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Incorrect old password"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Password changed successfully"})
 }

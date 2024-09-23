@@ -50,8 +50,6 @@ func main() {
 		log.Fatalf("Ошибка миграции базы данных: %s", err)
 	}
 
-	//fmt.Println(service.SetClassTeacher(4, 3))
-
 	if err = db.InsertSeeds(); err != nil {
 		log.Fatalf("Ошибка при загрузки необходимых данных в таблицы: %s", err)
 	}

@@ -22,7 +22,7 @@ import (
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /classes [post]
+// @Router /classes/api/v1/ [post]
 func CreateNewClass(c *gin.Context) {
 	var class models.Class
 	if err := c.BindJSON(&class); err != nil {
@@ -61,11 +61,11 @@ func CreateNewClass(c *gin.Context) {
 // @Description get list of all classes
 // @ID get-all-classes
 // @Produce json
-// @Success 200 {array} models.Class
+// @Success 200 {array} models.SwagClassInfo
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /classes [get]
+// @Router /classes/api/v1/ [get]
 func GetAllClasses(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
@@ -80,7 +80,7 @@ func GetAllClasses(c *gin.Context) {
 		c.JSON(http.StatusNoContent, gin.H{"massage": "No classes found"})
 	}
 
-	logger.Info.Printf("[controllers] Successfully got all classes: %v", classes)
+	logger.Info.Printf("[controllers] Successfully got all classes")
 	c.JSON(http.StatusOK, gin.H{"classes": classes})
 }
 
@@ -93,11 +93,11 @@ func GetAllClasses(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param input body models.ClassUser true "Info for setting"
-// @Success 200 {array} models.Class
+// @Success 200 {array} defaultResponse
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /classes/set [post]
+// @Router /classes/api/v1/set/ [post]
 func SetClassTeacher(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
 		c.JSON(http.StatusForbidden, gin.H{
@@ -122,6 +122,21 @@ func SetClassTeacher(c *gin.Context) {
 
 }
 
+// UpdateClass
+// @Summary Update Class
+// @Security ApiKeyAuth
+// @Tags classes
+// @Description Update class by ID
+// @ID update-class
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the class"
+// @Param input body models.SwagClass true "Update class data"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /classes/api/v1/update/{id} [put]
 func UpdateClass(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
 		c.JSON(http.StatusForbidden, gin.H{
@@ -145,7 +160,10 @@ func UpdateClass(c *gin.Context) {
 	class.ID = uint(id)
 
 	if err := service.UpdateClass(uint(id), class); err != nil {
-
+		logger.Error.Printf("[controllers] Failed to update class %v: %v", id, err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
+	logger.Info.Printf("[controllers UpdateClass] Successfully updated class to %v", class)
+	c.JSON(http.StatusOK, gin.H{"message": "Class updated successfully"})
 
 }

@@ -91,7 +91,7 @@ func UpdateUser(id uint, user, existUser models.User) error {
 	return nil
 }
 
-func DeActiveUserByID(id int) error {
+func DeActiveUserByID(id uint) error {
 	if err := db.GetDBConnection().
 		Model(&models.User{}).
 		Where("id = ?", id).
@@ -105,7 +105,7 @@ func DeActiveUserByID(id int) error {
 	return nil
 }
 
-func ActiveUserByID(id int) error {
+func ActiveUserByID(id uint) error {
 	if err := db.GetDBConnection().
 		Model(&models.User{}).
 		Where("id = ?", id).
@@ -119,7 +119,7 @@ func ActiveUserByID(id int) error {
 	return nil
 }
 
-func DeleteUserByID(id int) error {
+func DeleteUserByID(id uint) error {
 	if err := db.GetDBConnection().
 		Model(&models.User{}).
 		Where("id = ?", id).
@@ -133,7 +133,7 @@ func DeleteUserByID(id int) error {
 	return nil
 }
 
-func ReturnUserByID(id int) error {
+func ReturnUserByID(id uint) error {
 	if err := db.GetDBConnection().
 		Model(&models.User{}).
 		Where("id = ?", id).
@@ -142,6 +142,32 @@ func ReturnUserByID(id int) error {
 			"deleted_at": nil,
 		}).Error; err != nil {
 		logger.Error.Printf("[repository ReturnUserByID] Error returning user: %v", err)
+		return err
+	}
+	return nil
+}
+
+func ResetUserPasswordToDefault(id uint, newPassword string) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"password": newPassword,
+		}).Error; err != nil {
+		logger.Error.Printf("[repository ResetUserPasswordByID] Error reseting User`s password: %v", err)
+		return err
+	}
+	return nil
+}
+
+func ChangeOwnPasswordByUser(id uint, newPassword string) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"password": newPassword,
+		}).Error; err != nil {
+		logger.Error.Printf("[repository ResetUserPasswordByUser] Error reseting User`s password: %v", err)
 		return err
 	}
 	return nil

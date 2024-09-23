@@ -16,31 +16,33 @@ func InitRoutes() *gin.Engine {
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.GET("/ping", PingPong)
 
-	auth := router.Group("/auth")
+	auth := router.Group("/auth/api/v1")
 	{
 		auth.POST("/sign-up", SignUp)
 		auth.POST("/sign-in", SignIn)
 	}
 
-	usersG := router.Group("/users", checkUserAuthentication)
+	UsersG := router.Group("users/api/v1", checkUserAuthentication)
 	{
-		usersG.GET("/", GetAllUsers)
-		usersG.GET("/:id", GetUserByID)
-		usersG.POST("/", CreateNewUser)
-		usersG.PUT("/:id", UpdateUser)
-		usersG.PATCH("/deactivate/:id", DeActivateUser)
-		usersG.PATCH("/activate/:id", ActivateUser)
-		usersG.DELETE("/delete/:id", DeleteUser)
-		usersG.DELETE("/return/:id", ReturnUser)
-
+		UsersG.GET("/", GetAllUsers)
+		UsersG.GET("/:id", GetUserByID)
+		UsersG.POST("/", CreateNewUser)
+		UsersG.PUT("/:id", UpdateUser)
+		UsersG.PATCH("/deactivate/:id", DeActivateUser)
+		UsersG.PATCH("/activate/:id", ActivateUser)
+		UsersG.DELETE("/delete/:id", DeleteUser)
+		UsersG.DELETE("/return/:id", ReturnUser)
+		UsersG.PATCH("/reset-password/:id", ResetUserPasswordByAdmin)
+		UsersG.PATCH("/change-password", ChangeOwnPasswordByUser)
 	}
 
-	classesG := router.Group("/classes", checkUserAuthentication)
+	classesG := router.Group("classes/api/v1", checkUserAuthentication)
 
 	{
 		classesG.POST("/", CreateNewClass)
 		classesG.GET("/", GetAllClasses)
 		classesG.POST("/set", SetClassTeacher)
+		classesG.PUT("/update/:id", UpdateClass)
 
 	}
 
