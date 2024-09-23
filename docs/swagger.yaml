@@ -284,6 +284,78 @@ paths:
       summary: Create Class
       tags:
       - classes
+  /classes/api/v1/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete class by ID
+      operationId: delete-class
+      parameters:
+      - description: id of the class
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete class by ID
+      tags:
+      - classes
+  /classes/api/v1/return/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Return class by ID
+      operationId: return-class
+      parameters:
+      - description: id of the class
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Return class by ID
+      tags:
+      - classes
   /classes/api/v1/set/:
     post:
       consumes:

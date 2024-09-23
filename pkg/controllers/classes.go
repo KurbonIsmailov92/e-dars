@@ -167,3 +167,75 @@ func UpdateClass(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Class updated successfully"})
 
 }
+
+// DeleteClass
+// @Summary Delete class by ID
+// @Security ApiKeyAuth
+// @Tags classes
+// @Description Delete class by ID
+// @ID delete-class
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the class"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /classes/api/v1/delete/{id} [delete]
+func DeleteClass(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to delete class",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid class ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid class ID"})
+	}
+	if err = service.DeleteClass(uint(id)); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "Class not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully deleted class: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "Class Deleted!"})
+}
+
+// ReturnClass
+// @Summary Return class by ID
+// @Security ApiKeyAuth
+// @Tags classes
+// @Description Return class by ID
+// @ID return-class
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the class"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /classes/api/v1/return/{id} [delete]
+func ReturnClass(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to return class",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers] Invalid class ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid class ID"})
+	}
+	if err = service.ReturnClass(uint(id)); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "Class not found"})
+		return
+	}
+	logger.Info.Printf("[controllers] Successfully returned class: %v", id)
+	c.JSON(http.StatusOK, gin.H{"message": "Class Returned successfully!"})
+}

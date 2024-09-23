@@ -43,6 +43,8 @@ func InitRoutes() *gin.Engine {
 		classesG.GET("/", GetAllClasses)
 		classesG.POST("/set", SetClassTeacher)
 		classesG.PUT("/update/:id", UpdateClass)
+		classesG.DELETE("/delete/:id", DeleteClass)
+		classesG.DELETE("/return/:id", ReturnClass)
 
 	}
 

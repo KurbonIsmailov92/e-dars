@@ -66,3 +66,17 @@ func UpdateClass(id uint, class models.Class) (err error) {
 	}
 	return nil
 }
+
+func DeleteClass(id uint) error {
+	if err := repository.DeleteClassByID(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ReturnClass(id uint) error {
+	if err := repository.ReturnClassByID(id); err != nil {
+		return err
+	}
+	return nil
+}

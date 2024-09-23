@@ -4,6 +4,7 @@ import (
 	"e-dars/internals/db"
 	"e-dars/internals/models"
 	"e-dars/logger"
+	"time"
 )
 
 func SetClassTeacher(classID, teacherID uint) error {
@@ -86,5 +87,33 @@ func UpdateClass(id uint, class, classFromDB models.Class) (err error) {
 		return err
 	}
 
+	return nil
+}
+
+func DeleteClassByID(id uint) error {
+	if err := db.GetDBConnection().
+		Model(&models.Class{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"is_deleted": true,
+			"deleted_at": time.Now(),
+		}).Error; err != nil {
+		logger.Error.Printf("[repository DeleteClassByID] Error deleting class: %v", err)
+		return err
+	}
+	return nil
+}
+
+func ReturnClassByID(id uint) error {
+	if err := db.GetDBConnection().
+		Model(&models.Class{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"is_deleted": false,
+			"deleted_at": nil,
+		}).Error; err != nil {
+		logger.Error.Printf("[repository ReturnClassByID] Error returning class: %v", err)
+		return err
+	}
 	return nil
 }

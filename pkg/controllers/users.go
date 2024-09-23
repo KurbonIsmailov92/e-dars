@@ -259,7 +259,7 @@ func DeleteUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
 		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to activate user",
+			"error": "You do not have permission to delete user",
 		})
 		return
 	}
@@ -295,7 +295,7 @@ func ReturnUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
 		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to activate user",
+			"error": "You do not have permission to return user",
 		})
 		return
 	}
