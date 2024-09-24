@@ -84,6 +84,44 @@ func GetAllClasses(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"classes": classes})
 }
 
+// GetClassByID
+// @Summary Get Class
+// @Security ApiKeyAuth
+// @Tags classes
+// @Description get class by ID
+// @ID get-class
+// @Produce json
+// @Param id path integer true "id of the class"
+// @Success 200 {array} models.SwagClassInfo
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /classes/api/v1/{id} [get]
+func GetClassByID(c *gin.Context) {
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to see a class",
+		})
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	class, err := service.GetClassByID(uint(id))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	logger.Info.Printf("[controllers] Successfully got class by id %v", id)
+	c.JSON(http.StatusOK, gin.H{"class": class})
+}
+
 // SetClassTeacher
 // @Summary Set Class to Teacher
 // @Security ApiKeyAuth

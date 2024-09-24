@@ -15,6 +15,25 @@ definitions:
       message:
         type: string
     type: object
+  models.Class:
+    properties:
+      classroom_number:
+        type: integer
+      deleted_at:
+        type: string
+      desc:
+        type: string
+      id:
+        type: integer
+      is_deleted:
+        type: boolean
+      name:
+        type: string
+      teacher:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
   models.ClassUser:
     properties:
       class_id:
@@ -34,6 +53,23 @@ definitions:
       code:
         type: string
       name:
+        type: string
+    type: object
+  models.Schedule:
+    properties:
+      class:
+        $ref: '#/definitions/models.Class'
+      class_id:
+        type: integer
+      group:
+        $ref: '#/definitions/models.Group'
+      group_id:
+        type: integer
+      id:
+        type: integer
+      is_exam:
+        type: boolean
+      planned_date:
         type: string
     type: object
   models.SignInInput:
@@ -64,6 +100,17 @@ definitions:
         items:
           $ref: '#/definitions/models.User'
         type: array
+    type: object
+  models.SwagSchedule:
+    properties:
+      class_id:
+        type: integer
+      group_id:
+        type: integer
+      is_exam:
+        type: boolean
+      planned_date:
+        type: string
     type: object
   models.SwagUser:
     properties:
@@ -284,6 +331,42 @@ paths:
       summary: Create Class
       tags:
       - classes
+  /classes/api/v1/{id}:
+    get:
+      description: get class by ID
+      operationId: get-class
+      parameters:
+      - description: id of the class
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SwagClassInfo'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Class
+      tags:
+      - classes
   /classes/api/v1/delete/{id}:
     delete:
       consumes:
@@ -465,6 +548,184 @@ paths:
       summary: Check Connection
       tags:
       - check
+  /schedules/api/v1/:
+    get:
+      description: Get list of all Schedule Notes
+      operationId: get-all-schedule-notes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Schedule'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get All Schedule Notes
+      tags:
+      - schedules
+    post:
+      consumes:
+      - application/json
+      description: Create new Schedule Note. Time must be in this format "2024-09-28T08:30:00Z"
+      operationId: create-schedule-note
+      parameters:
+      - description: New Schedule Note info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagSchedule'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Schedule Note
+      tags:
+      - schedules
+  /schedules/api/v1/{id}:
+    get:
+      description: get schedule note by ID
+      operationId: get-schedule-note-by-id
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SwagSchedule'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Schedule Note By ID
+      tags:
+      - schedules
+  /schedules/api/v1/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Schedule Note by ID
+      operationId: delete-schedule-note
+      parameters:
+      - description: id of the class
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Schedule Note
+      tags:
+      - schedules
+  /schedules/api/v1/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update Schedule Note by ID Time must be in this format "2024-09-28T08:30:00Z"
+      operationId: update-schedule-note
+      parameters:
+      - description: id of the class
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 'Update Schedule Note data '
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagSchedule'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Schedule Note
+      tags:
+      - schedules
   /users/api/v1/:
     get:
       description: get list of all users

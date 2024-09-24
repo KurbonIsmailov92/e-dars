@@ -41,11 +41,20 @@ func InitRoutes() *gin.Engine {
 	{
 		classesG.POST("/", CreateNewClass)
 		classesG.GET("/", GetAllClasses)
+		classesG.GET("/:id", GetClassByID)
 		classesG.POST("/set", SetClassTeacher)
 		classesG.PUT("/update/:id", UpdateClass)
 		classesG.DELETE("/delete/:id", DeleteClass)
 		classesG.DELETE("/return/:id", ReturnClass)
+	}
 
+	schedulesG := router.Group("schedules/api/v1", checkUserAuthentication)
+	{
+		schedulesG.POST("/", CreateNewScheduleNote)
+		schedulesG.GET("/", GetAllScheduleNotes)
+		schedulesG.GET("/:id", GetScheduleNoteByID)
+		schedulesG.PUT("/update/:id", UpdateScheduleNote)
+		schedulesG.DELETE("/delete/:id", DeleteScheduleNote)
 	}
 
 	return router

@@ -3,3 +3,10 @@ ERROR: 2024/09/23 15:47:04 users.go:109: [service ChangeOwnPasswordByUser] Incor
 ERROR: 2024/09/23 16:01:01 users.go:107: [service ChangeOwnPasswordByUser] Incorrect old password
 ERROR: 2024/09/23 16:02:16 users.go:107: [service ChangeOwnPasswordByUser] Incorrect old password
 ERROR: 2024/09/23 16:09:48 users.go:19: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/24 11:42:00 classes.go:15: [repository SetClassTeacher] Failed to set teacher for class: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "class_users_pkey" (SQLSTATE 23505)
+ERROR: 2024/09/24 14:05:15 schedules.go:35: [repository GetAllScheduleNotes] Error getting all notes: Classes: unsupported relations for schema Schedule
+ERROR: 2024/09/24 14:07:28 schedules.go:35: [repository GetAllScheduleNotes] Error getting all notes: Classes: unsupported relations for schema Schedule
+ERROR: 2024/09/24 16:15:31 schedules.go:37: [repository.GetScheduleNoteByID] Error getting Schedule Note by ID: record not found
+ERROR: 2024/09/24 16:15:31 schedules.go:203: [controllers] Failed to delete schedule note 2: ErrRecordNotFound
+ERROR: 2024/09/24 16:15:57 schedules.go:37: [repository.GetScheduleNoteByID] Error getting Schedule Note by ID: record not found
+ERROR: 2024/09/24 16:15:57 schedules.go:203: [controllers] Failed to delete schedule note 1: ErrRecordNotFound

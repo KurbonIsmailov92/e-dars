@@ -70,9 +70,10 @@ func GetAllClasses() (classes []models.Class, err error) {
 func GetClassByID(classID uint) (class models.Class, err error) {
 	err = db.GetDBConnection().
 		Where("id = ?", classID).
+		Preload("Teacher").
 		First(&class).Error
 	if err != nil {
-		logger.Error.Printf("[repository.GetClassByID] Error getting class by name: %v\n", err)
+		logger.Error.Printf("[repository.GetClassByID] Error getting class by ID: %v\n", err)
 		return class, translateError(err)
 	}
 	return class, nil

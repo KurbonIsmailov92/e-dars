@@ -11,3 +11,10 @@ type Schedule struct {
 	PlannedDate time.Time `gorm:"not null" json:"planned_date"`
 	IsExam      bool      `gorm:"not null;default:false" json:"is_exam"`
 }
+
+type SwagSchedule struct {
+	GroupID     uint      `gorm:"not null" json:"group_id"`
+	ClassID     uint      `gorm:"not null" json:"class_id"`
+	PlannedDate time.Time `gorm:"not null" json:"planned_date"`
+	IsExam      bool      `gorm:"not null;default:false" json:"is_exam"`
+}

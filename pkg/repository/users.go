@@ -10,6 +10,14 @@ import (
 	"time"
 )
 
+func translateError(err error) error {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return errs.ErrRecordNotFound
+	}
+
+	return err
+}
+
 func GetUserByUsernameAndPassword(username string, password string) (user models.User, err error) {
 	err = db.GetDBConnection().
 		Where("username = ? AND password = ?", username, password).
@@ -21,14 +29,6 @@ func GetUserByUsernameAndPassword(username string, password string) (user models
 
 	}
 	return user, nil
-}
-
-func translateError(err error) error {
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return errs.ErrRecordNotFound
-	}
-
-	return err
 }
 
 func GetUserByUsername(userName string) (user models.User, err error) {
