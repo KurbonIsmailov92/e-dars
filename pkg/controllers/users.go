@@ -61,22 +61,23 @@ func CreateNewUser(c *gin.Context) {
 // @Description get list of all users
 // @ID get-all-users
 // @Produce json
-// @Success 200 {array} models.SwagUserForUpdateByAdmin
+// @Success 200 {array} models.SwagUserForShow
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
 // @Router /users/api/v1/ [get]
 func GetAllUsers(c *gin.Context) {
-	users, err := service.GetAllUsers()
-	if err != nil {
-		c.JSON(http.StatusNoContent, gin.H{"massage": "No users found"})
-	}
 
 	if c.GetString(userRoleCtx) != "admin" {
 		c.JSON(http.StatusForbidden, gin.H{
 			"error": "You do not have permission to see all users",
 		})
 		return
+	}
+
+	users, err := service.GetAllUsers()
+	if err != nil {
+		c.JSON(http.StatusNoContent, gin.H{"massage": "No users found"})
 	}
 
 	logger.Info.Printf("[controllers] Successfully got all users: %v", users)

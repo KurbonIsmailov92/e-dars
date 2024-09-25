@@ -54,3 +54,23 @@ func DeleteScheduleNoteByID(id uint) (err error) {
 	}
 	return nil
 }
+
+func GetTeacherScheduleByDates(id uint, dates models.ScheduleDates) (notes []models.SwagScheduleForUsers, err error) {
+	if notes, err = repository.GetTeacherScheduleByDates(id, dates); err != nil {
+		return nil, err
+	}
+	return notes, nil
+}
+func GetStudentScheduleByDates(id uint, dates models.ScheduleDates) (notes []models.SwagScheduleForUsers, err error) {
+	if notes, err = repository.GetStudentScheduleByDates(id, dates); err != nil {
+		return nil, err
+	}
+	return notes, nil
+}
+
+func GetParentScheduleByDates(id uint, dates models.ScheduleDates) (notes []models.SwagScheduleForUsers, err error) {
+	if notes, err = repository.GetParentScheduleByDates(id, dates); err != nil {
+		return nil, err
+	}
+	return notes, nil
+}

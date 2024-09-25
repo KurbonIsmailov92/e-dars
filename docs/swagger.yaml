@@ -116,6 +116,13 @@ definitions:
       planned_date:
         type: string
     type: object
+  models.ScheduleDates:
+    properties:
+      date_from:
+        type: string
+      date_to:
+        type: string
+    type: object
   models.SignInInput:
     properties:
       password:
@@ -155,6 +162,8 @@ definitions:
         type: string
       group:
         type: string
+      is_exam:
+        type: boolean
       mark:
         type: string
       student_name:
@@ -173,6 +182,21 @@ definitions:
       planned_date:
         type: string
     type: object
+  models.SwagScheduleForUsers:
+    properties:
+      class:
+        type: string
+      class_room:
+        type: string
+      date:
+        type: string
+      group:
+        type: string
+      is_exam:
+        type: boolean
+      teacher:
+        type: string
+    type: object
   models.SwagUser:
     properties:
       email:
@@ -181,6 +205,19 @@ definitions:
         type: string
       password:
         type: string
+      phone:
+        type: string
+      username:
+        type: string
+    type: object
+  models.SwagUserForShow:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: integer
       phone:
         type: string
       username:
@@ -837,7 +874,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Schedule'
+              $ref: '#/definitions/models.SwagScheduleForUsers'
             type: array
         "400":
           description: Bad Request
@@ -962,6 +999,117 @@ paths:
       summary: Delete Schedule Note
       tags:
       - schedules
+  /schedules/api/v1/parent:
+    post:
+      description: Get Parent Schedule Notes. Date format must be 2024-09-28
+      operationId: get-parent-schedule-notes
+      parameters:
+      - description: 'Example: 2024-09-28'
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ScheduleDates'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SwagScheduleForUsers'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Parent Schedule Notes
+      tags:
+      - schedules
+  /schedules/api/v1/student:
+    post:
+      description: Get Student Schedule Notes. Date format must be 2024-09-28
+      operationId: get-student-schedule-notes
+      parameters:
+      - description: 'Example: 2024-09-28'
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ScheduleDates'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SwagScheduleForUsers'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Student Schedule Notes
+      tags:
+      - schedules
+  /schedules/api/v1/teacher:
+    post:
+      description: Get Teachers Schedule Notes. Date format must be 2024-09-28
+      operationId: get-teacher-schedule-notes
+      parameters:
+      - description: 'Example: 2024-09-28'
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ScheduleDates'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SwagScheduleForUsers'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Teachers Schedule Notes
+      tags:
+      - schedules
   /schedules/api/v1/update/{id}:
     put:
       consumes:
@@ -1015,7 +1163,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.SwagUserForUpdateByAdmin'
+              $ref: '#/definitions/models.SwagUserForShow'
             type: array
         "400":
           description: Bad Request

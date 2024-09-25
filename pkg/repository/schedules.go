@@ -65,13 +65,32 @@ func DeleteScheduleNoteByID(id uint) error {
 	return nil
 }
 
-func GetLastCreatedScheduleNote() (schedule models.Schedule, err error) {
-	err = db.GetDBConnection().
-		Order("id DESC").
-		First(&schedule).Error
-
-	if err != nil {
-		return models.Schedule{}, translateError(err)
+func GetTeacherScheduleByDates(id uint, dates models.ScheduleDates) (notes []models.SwagScheduleForUsers, err error) {
+	if err = db.GetDBConnection().
+		Raw(db.GetTeacherScheduleByDateDB, id, dates.DateFrom, dates.DateTo).
+		Scan(&notes).Error; err != nil {
+		logger.Error.Println("[repository.GetTeacherScheduleByDates] Error getting teacher`s notes: ", err)
+		return notes, translateError(err)
 	}
-	return schedule, nil
+	return notes, nil
+}
+
+func GetStudentScheduleByDates(id uint, dates models.ScheduleDates) (notes []models.SwagScheduleForUsers, err error) {
+	if err = db.GetDBConnection().
+		Raw(db.GetStudentScheduleByDateDB, id, dates.DateFrom, dates.DateTo).
+		Scan(&notes).Error; err != nil {
+		logger.Error.Println("[repository.GetStudentScheduleByDates] Error getting student`s notes: ", err)
+		return notes, translateError(err)
+	}
+	return notes, nil
+}
+
+func GetParentScheduleByDates(id uint, dates models.ScheduleDates) (notes []models.SwagScheduleForUsers, err error) {
+	if err = db.GetDBConnection().
+		Raw(db.GetParentScheduleByDateDB, id, dates.DateFrom, dates.DateTo).
+		Scan(&notes).Error; err != nil {
+		logger.Error.Println("[repository.GetParentScheduleByDates] Error getting parent`s notes: ", err)
+		return notes, translateError(err)
+	}
+	return notes, nil
 }

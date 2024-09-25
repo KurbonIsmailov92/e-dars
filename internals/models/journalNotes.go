@@ -22,6 +22,7 @@ type SwagJournalNotes struct {
 	ClassRoom   string    `gorm:"not null" json:"class_room"`
 	Mark        string    `gorm:"default null" json:"mark"`
 	TeacherName string    `gorm:"not null" json:"teacher_name"`
+	IsExam      bool      `gorm:"not null" json:"is_exam"`
 }
 
 type JournalDates struct {

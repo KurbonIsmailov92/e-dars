@@ -174,7 +174,7 @@ func ChangeOwnPasswordByUser(id uint, newPassword string) error {
 }
 
 func GetTeacherIDFromDB(classID uint) (teacherID uint, err error) {
-	if err = db.GetDBConnection().Raw(db.DBGetTeacherID, classID).First(&teacherID).Error; err != nil {
+	if err = db.GetDBConnection().Raw(db.GetTeacherIDDB, classID).First(&teacherID).Error; err != nil {
 		logger.Error.Printf("[repository.GetTeacherIDFromDB] error getting teacher id: %v", err)
 		return teacherID, err
 	}

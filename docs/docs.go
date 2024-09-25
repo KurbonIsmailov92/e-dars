@@ -921,7 +921,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Schedule"
+                                "$ref": "#/definitions/models.SwagScheduleForUsers"
                             }
                         }
                     },
@@ -1035,6 +1035,180 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/controllers.defaultResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/schedules/api/v1/parent": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get Parent Schedule Notes. Date format must be 2024-09-28",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Get Parent Schedule Notes",
+                "operationId": "get-parent-schedule-notes",
+                "parameters": [
+                    {
+                        "description": "Example: 2024-09-28",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ScheduleDates"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SwagScheduleForUsers"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/schedules/api/v1/student": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get Student Schedule Notes. Date format must be 2024-09-28",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Get Student Schedule Notes",
+                "operationId": "get-student-schedule-notes",
+                "parameters": [
+                    {
+                        "description": "Example: 2024-09-28",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ScheduleDates"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SwagScheduleForUsers"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/schedules/api/v1/teacher": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get Teachers Schedule Notes. Date format must be 2024-09-28",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Get Teachers Schedule Notes",
+                "operationId": "get-teacher-schedule-notes",
+                "parameters": [
+                    {
+                        "description": "Example: 2024-09-28",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ScheduleDates"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SwagScheduleForUsers"
+                            }
                         }
                     },
                     "400": {
@@ -1198,7 +1372,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.SwagUserForUpdateByAdmin"
+                                "$ref": "#/definitions/models.SwagUserForShow"
                             }
                         }
                     },
@@ -1854,6 +2028,17 @@ const docTemplate = `{
                 }
             }
         },
+        "models.ScheduleDates": {
+            "type": "object",
+            "properties": {
+                "date_from": {
+                    "type": "string"
+                },
+                "date_to": {
+                    "type": "string"
+                }
+            }
+        },
         "models.SignInInput": {
             "type": "object",
             "properties": {
@@ -1914,6 +2099,9 @@ const docTemplate = `{
                 "group": {
                     "type": "string"
                 },
+                "is_exam": {
+                    "type": "boolean"
+                },
                 "mark": {
                     "type": "string"
                 },
@@ -1942,6 +2130,29 @@ const docTemplate = `{
                 }
             }
         },
+        "models.SwagScheduleForUsers": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "class_room": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "group": {
+                    "type": "string"
+                },
+                "is_exam": {
+                    "type": "boolean"
+                },
+                "teacher": {
+                    "type": "string"
+                }
+            }
+        },
         "models.SwagUser": {
             "type": "object",
             "properties": {
@@ -1953,6 +2164,26 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SwagUserForShow": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "phone": {
                     "type": "string"

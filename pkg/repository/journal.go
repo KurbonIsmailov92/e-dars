@@ -32,7 +32,7 @@ func GetAllJournalNotes() (notes []models.JournalNote, err error) {
 
 func GetJournalNoteByID(id uint) (note models.SwagJournalNotes, err error) {
 	if err = db.GetDBConnection().
-		Raw(db.DBGetJournalNotesByID, id).
+		Raw(db.GetJournalNotesByIDDB, id).
 		Scan(&note).
 		Error; err != nil {
 		logger.Error.Printf("Failed to get journal note: %v", err)
@@ -44,7 +44,7 @@ func GetJournalNoteByID(id uint) (note models.SwagJournalNotes, err error) {
 
 func GetJournalNotesByParentIDAndDate(id uint, dates models.JournalDates) (notes []models.SwagJournalNotes, err error) {
 	err = db.GetDBConnection().
-		Raw(db.DBGetChildJournalNotesByDates, id, dates.DateFrom, dates.DateTo).
+		Raw(db.GetChildJournalNotesByDatesDB, id, dates.DateFrom, dates.DateTo).
 		Scan(&notes).
 		Error
 
@@ -57,7 +57,7 @@ func GetJournalNotesByParentIDAndDate(id uint, dates models.JournalDates) (notes
 
 func GetJournalNotesByStudent(studentID uint, dates models.JournalDates) (notes []models.SwagJournalNotes, err error) {
 	err = db.GetDBConnection().
-		Raw(db.DBGetOwnJournalNotesByDates, studentID, dates.DateFrom, dates.DateTo).
+		Raw(db.GetOwnJournalNotesByDatesDB, studentID, dates.DateFrom, dates.DateTo).
 		Scan(&notes).
 		Error
 
@@ -70,7 +70,7 @@ func GetJournalNotesByStudent(studentID uint, dates models.JournalDates) (notes 
 
 func GetJournalNotesByTeacher(teacherID uint, dates models.JournalDates) (notes []models.SwagJournalNotes, err error) {
 	err = db.GetDBConnection().
-		Raw(db.DBGetJournalNotesByTeacherAndDates, teacherID, dates.DateFrom, dates.DateTo).
+		Raw(db.GetJournalNotesByTeacherAndDatesDB, teacherID, dates.DateFrom, dates.DateTo).
 		Scan(&notes).
 		Error
 

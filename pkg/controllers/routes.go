@@ -55,6 +55,9 @@ func InitRoutes() *gin.Engine {
 		schedulesG.GET("/:id", GetScheduleNoteByID)
 		schedulesG.PUT("/update/:id", UpdateScheduleNote)
 		schedulesG.DELETE("/delete/:id", DeleteScheduleNote)
+		schedulesG.POST("/teacher", GetTeacherScheduleByDates)
+		schedulesG.POST("/student", GetStudentScheduleByDates)
+		schedulesG.POST("/parent", GetParentScheduleByDates)
 	}
 
 	journalG := router.Group("journal/api/v1", checkUserAuthentication)

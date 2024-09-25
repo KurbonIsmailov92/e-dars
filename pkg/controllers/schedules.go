@@ -61,7 +61,7 @@ func CreateNewScheduleNote(c *gin.Context) {
 // @Description Get list of all Schedule Notes
 // @ID get-all-schedule-notes
 // @Produce json
-// @Success 200 {array} models.Schedule
+// @Success 200 {array} models.SwagScheduleForUsers
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
@@ -205,4 +205,133 @@ func DeleteScheduleNote(c *gin.Context) {
 	}
 	logger.Info.Printf("[controllers DeleteScheduleNote] Successfully deleted schedule note to %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "Schedule note deleted successfully"})
+}
+
+// GetTeacherScheduleByDates
+// @Summary Get Teachers Schedule Notes
+// @Security ApiKeyAuth
+// @Tags schedules
+// @Description Get Teachers Schedule Notes. Date format must be 2024-09-28
+// @ID get-teacher-schedule-notes
+// @Produce json
+// @Param input body models.ScheduleDates true "Example: 2024-09-28"
+// @Success 200 {array} models.SwagScheduleForUsers
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /schedules/api/v1/teacher [post]
+func GetTeacherScheduleByDates(c *gin.Context) {
+	if c.GetString(userRoleCtx) != "teacher" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to see teachers schedule note",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.GetString(userIDCtx))
+	if err != nil {
+		logger.Error.Printf("[controllers.GetTeacherScheduleByDates] Invalid ID: %v", err)
+		return
+	}
+
+	var dates models.ScheduleDates
+
+	if err := c.BindJSON(&dates); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	notes, err := service.GetTeacherScheduleByDates(uint(id), dates)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	logger.Info.Printf("[controller.GetTeacherScheduleByDates] Successfully got teacher`s schedule notes")
+	c.JSON(http.StatusOK, gin.H{"Schedule Notes": notes})
+
+}
+
+// GetStudentScheduleByDates
+// @Summary Get Student Schedule Notes
+// @Security ApiKeyAuth
+// @Tags schedules
+// @Description Get Student Schedule Notes. Date format must be 2024-09-28
+// @ID get-student-schedule-notes
+// @Produce json
+// @Param input body models.ScheduleDates true "Example: 2024-09-28"
+// @Success 200 {array} models.SwagScheduleForUsers
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /schedules/api/v1/student [post]
+func GetStudentScheduleByDates(c *gin.Context) {
+	if c.GetString(userRoleCtx) != "student" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to see student schedule note",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.GetString(userIDCtx))
+	if err != nil {
+		logger.Error.Printf("[controllers.GetStudentScheduleByDates] Invalid ID: %v", err)
+		return
+	}
+
+	var dates models.ScheduleDates
+
+	if err := c.BindJSON(&dates); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	notes, err := service.GetStudentScheduleByDates(uint(id), dates)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	logger.Info.Printf("[controller.GetStudentScheduleByDates] Successfully got student`s schedule notes")
+	c.JSON(http.StatusOK, gin.H{"Schedule Notes": notes})
+
+}
+
+// GetParentScheduleByDates
+// @Summary Get Parent Schedule Notes
+// @Security ApiKeyAuth
+// @Tags schedules
+// @Description Get Parent Schedule Notes. Date format must be 2024-09-28
+// @ID get-parent-schedule-notes
+// @Produce json
+// @Param input body models.ScheduleDates true "Example: 2024-09-28"
+// @Success 200 {array} models.SwagScheduleForUsers
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /schedules/api/v1/parent [post]
+func GetParentScheduleByDates(c *gin.Context) {
+	if c.GetString(userRoleCtx) != "parent" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to see parents schedule note",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.GetString(userIDCtx))
+	if err != nil {
+		logger.Error.Printf("[controllers.GetParentScheduleByDates] Invalid ID: %v", err)
+		return
+	}
+
+	var dates models.ScheduleDates
+
+	if err := c.BindJSON(&dates); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	notes, err := service.GetParentScheduleByDates(uint(id), dates)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	logger.Info.Printf("[controller.GetParentScheduleByDates] Successfully got parent`s schedule notes")
+	c.JSON(http.StatusOK, gin.H{"Schedule Notes": notes})
+
 }

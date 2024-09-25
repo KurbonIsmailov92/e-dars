@@ -24,10 +24,18 @@ type User struct {
 
 type SwagUser struct {
 	FullName string `json:"full_name"`
-	Username string `json:"username" gorm:"unique"`
-	Password string `json:"password" gorm:"not null"`
-	Email    string `json:"email" gorm:"size:255;unique;"`
-	Phone    string `json:"phone" gorm:"size:20;"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+}
+
+type SwagUserForShow struct {
+	ID       uint   `json:"id"`
+	FullName string `json:"full_name"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
 }
 
 type SignInInput struct {

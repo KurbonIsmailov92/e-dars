@@ -26,3 +26,17 @@ type SwagScheduleToShow struct {
 	PlannedDate time.Time `gorm:"not null" json:"planned_date"`
 	IsExam      bool      `gorm:"not null;default:false" json:"is_exam"`
 }
+
+type SwagScheduleForUsers struct {
+	Date      time.Time `gorm:"not null" json:"date"`
+	Class     string    `gorm:"not null" json:"class"`
+	ClassRoom string    `gorm:"not null" json:"class_room"`
+	Group     string    `gorm:"not null" json:"group"`
+	Teacher   string    `gorm:"not null" json:"teacher"`
+	IsExam    bool      `gorm:"not null;default:false" json:"is_exam"`
+}
+
+type ScheduleDates struct {
+	DateFrom string `json:"date_from"`
+	DateTo   string `json:"date_to"`
+}
