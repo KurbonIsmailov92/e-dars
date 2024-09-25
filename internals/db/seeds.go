@@ -22,14 +22,13 @@ func InsertSeeds() error {
 	marks = append(marks, models.Mark{Code: "3"})
 	marks = append(marks, models.Mark{Code: "4"})
 	marks = append(marks, models.Mark{Code: "5"})
-	marks = append(marks, models.Mark{Code: "N/A"})
+	marks = append(marks, models.Mark{Code: "Enable"})
+	marks = append(marks, models.Mark{Code: "Disable"})
 
-	for i := 1; i <= 11; i++ {
+	for i := 5; i <= 11; i++ {
 		groups = append(groups, models.Group{CodeName: fmt.Sprintf("%dА", i)})
 		groups = append(groups, models.Group{CodeName: fmt.Sprintf("%dБ", i)})
 		groups = append(groups, models.Group{CodeName: fmt.Sprintf("%dВ", i)})
-		groups = append(groups, models.Group{CodeName: fmt.Sprintf("%dГ", i)})
-		groups = append(groups, models.Group{CodeName: fmt.Sprintf("%dД", i)})
 	}
 
 	if err := GetDBConnection().Save(&roles).Error; err != nil {

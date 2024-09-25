@@ -22,7 +22,7 @@ func checkUserAuthentication(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"error": "empty auth header",
 		})
-		logger.Info.Printf("[controller-midlwere] empty auth header")
+		logger.Info.Printf("[controller.checkUserAuthentication] empty auth header")
 		return
 	}
 
@@ -39,7 +39,7 @@ func checkUserAuthentication(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"error": "token is empty",
 		})
-		logger.Error.Printf("[controller-midlwere] token is empty")
+		logger.Error.Printf("[controller.checkUserAuthentication] token is empty")
 		return
 	}
 
@@ -48,7 +48,7 @@ func checkUserAuthentication(c *gin.Context) {
 	claims, err := service.ParseToken(accessToken)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
-		logger.Error.Printf("[controller-midlwere] invalid token")
+		logger.Error.Printf("[controller.checkUserAuthentication] invalid token")
 		return
 	}
 

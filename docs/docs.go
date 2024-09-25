@@ -589,7 +589,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.SwagJournalNote"
+                            "$ref": "#/definitions/models.MarkSetter"
                         }
                     }
                 ],
@@ -621,14 +621,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/journal/api/v1/notes": {
+        "/journal/api/v1/my-notes": {
             "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Create new Journal Note. Time must be in this format \"2024-09-28T08:30:00Z\"",
+                "description": "Get Own Journal Notes. Time must be in this format \"2024-09-28\"",
                 "consumes": [
                     "application/json"
                 ],
@@ -638,11 +638,11 @@ const docTemplate = `{
                 "tags": [
                     "journal"
                 ],
-                "summary": "Get Journal Note Of Child",
-                "operationId": "get-journal-note-of-child",
+                "summary": "Get Own Journal Notes",
+                "operationId": "get-journal-note-of-student",
                 "parameters": [
                     {
-                        "description": "Date From and Date to Format should be lile 2024-09-28",
+                        "description": "Example: 2024-09-28",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -657,7 +657,129 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.SwagJournalNotesOfChildren"
+                                "$ref": "#/definitions/models.SwagJournalNotes"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/journal/api/v1/notes": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get Journal Note Of Child. Time must be in this format \"2024-09-28\"",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Get Journal Note Of Child",
+                "operationId": "get-journal-note-of-child",
+                "parameters": [
+                    {
+                        "description": "Example: 2024-09-28",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.JournalDates"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SwagJournalNotes"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "404"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/journal/api/v1/teacher-notes": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get Journal Notes by teacher. Time must be in this format \"2024-09-28\"",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Get Journal Notes by teacher",
+                "operationId": "get-journal-note-of-teacher",
+                "parameters": [
+                    {
+                        "description": "Example: 2024-09-28",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.JournalDates"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SwagJournalNotes"
                             }
                         }
                     },
@@ -711,7 +833,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.SwagJournalNotesOfChildren"
+                            "$ref": "#/definitions/models.SwagJournalNotes"
                         }
                     },
                     "400": {
@@ -1681,6 +1803,20 @@ const docTemplate = `{
                 }
             }
         },
+        "models.MarkSetter": {
+            "type": "object",
+            "properties": {
+                "mark_id": {
+                    "type": "integer"
+                },
+                "schedule_note_id": {
+                    "type": "integer"
+                },
+                "student_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Role": {
             "type": "object",
             "properties": {
@@ -1763,15 +1899,7 @@ const docTemplate = `{
                 }
             }
         },
-        "models.SwagJournalNote": {
-            "type": "object",
-            "properties": {
-                "schedule_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.SwagJournalNotesOfChildren": {
+        "models.SwagJournalNotes": {
             "type": "object",
             "properties": {
                 "class": {

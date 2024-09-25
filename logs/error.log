@@ -35,3 +35,8 @@ ERROR: 2024/09/25 15:38:34 journal.go:41: Failed to get journal notes for parent
 ERROR: 2024/09/25 15:40:23 journal.go:41: Failed to get journal notes for parent: ОШИБКА: неверный синтаксис для типа date: "$2" (SQLSTATE 22007)
 ERROR: 2024/09/25 15:53:31 journal.go:41: Failed to get journal notes for parent: ОШИБКА: незавершённый идентификатор в кавычках (примерное положение: """) (SQLSTATE 42601)
 ERROR: 2024/09/25 16:13:52 midlewere.go:51: [controller-midlwere] invalid token
+ERROR: 2024/09/26 00:27:15 midlewere.go:34: [controller-midlwere] invalid auth header
+ERROR: 2024/09/26 00:58:01 schedules.go:37: [repository.GetScheduleNoteByID] Error getting Schedule Note by ID: record not found
+ERROR: 2024/09/26 00:58:34 journal.go:32: Teacher ID is not the same as active user ID
+ERROR: 2024/09/26 00:58:46 journal.go:32: Teacher ID is not the same as active user ID
+ERROR: 2024/09/26 01:30:09 users.go:27: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found

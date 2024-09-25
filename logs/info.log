@@ -2340,3 +2340,650 @@ Error #01: http: request method or response status code does not allow body
 [GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
 [GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
 [GIN] 2024/09/25 - 16:53:34 | 200 |      4.8799ms |             ::1 | GET      "/journal/api/v1/3"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] PATCH  /journal/api/v1/mark      --> e-dars/pkg/controllers.SetMarkToJournal (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/25 - 18:57:49 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/25 - 18:57:50 | 200 |         815µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/25 - 18:57:50 | 200 |         507µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/25 - 18:57:50 | 200 |         507µs |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/25 - 18:57:50 | 200 |       624.6µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/25 - 18:58:22 | 200 |     10.7143ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] PATCH  /journal/api/v1/mark      --> e-dars/pkg/controllers.SetMarkToJournal (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/25 - 19:01:06 | 200 |       769.7µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/25 - 19:01:06 | 200 |          61µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/25 - 19:01:06 | 200 |       642.7µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/25 - 19:01:06 | 200 |       1.147ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/25 - 19:01:06 | 200 |       697.1µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/25 - 19:01:06 | 200 |       199.5µs |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/25 - 19:01:24 | 200 |      5.2446ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] PATCH  /journal/api/v1/mark      --> e-dars/pkg/controllers.SetMarkToJournal (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/25 - 19:04:53 | 201 |     11.2218ms |             ::1 | PATCH    "/journal/api/v1/mark"
+[GIN] 2024/09/25 - 19:06:45 | 403 |            0s |             ::1 | POST     "/journal/api/v1/notes"
+[GIN] 2024/09/25 - 19:07:00 | 403 |            0s |             ::1 | GET      "/journal/api/v1/"
+[GIN] 2024/09/25 - 19:07:22 | 201 |      5.3121ms |             ::1 | PATCH    "/journal/api/v1/mark"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] PATCH  /journal/api/v1/mark      --> e-dars/pkg/controllers.SetMarkToJournal (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] PATCH  /journal/api/v1/mark      --> e-dars/pkg/controllers.SetMarkToJournal (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/25 - 22:56:39 | 200 |      7.5814ms |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/25 - 22:56:39 | 200 |      1.0423ms |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/25 - 22:56:39 | 200 |      1.5647ms |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/25 - 22:56:39 | 200 |      2.6202ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/25 - 22:56:40 | 200 |      1.7542ms |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/25 - 22:56:40 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/25 - 22:56:52 | 200 |     25.8195ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/25 - 22:58:24 | 201 |     12.9902ms |             ::1 | PATCH    "/journal/api/v1/mark"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] PATCH  /journal/api/v1/mark      --> e-dars/pkg/controllers.SetMarkToJournal (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/25 - 23:00:09 | 200 |       506.3µs |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/25 - 23:00:52 | 200 |     13.0234ms |             ::1 | POST     "/journal/api/v1/notes"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/25 - 23:50:32 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/25 - 23:50:32 | 200 |       514.3µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/25 - 23:50:32 | 200 |       514.3µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/25 - 23:50:32 | 200 |       1.043ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/25 - 23:50:32 | 200 |       309.9µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/25 - 23:50:32 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/25 - 23:50:49 | 200 |      9.1309ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/25 - 23:51:20 | 403 |            0s |             ::1 | GET      "/journal/api/v1/"
+[GIN] 2024/09/25 - 23:52:28 | 201 |       9.973ms |             ::1 | POST     "/journal/api/v1/"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/26 - 00:21:59 | 200 |      1.3933ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 00:23:02 | 200 |      6.5996ms |             ::1 | POST     "/journal/api/v1/notes"
+[GIN] 2024/09/26 - 00:26:20 | 403 |            0s |             ::1 | POST     "/journal/api/v1/"
+[GIN] 2024/09/26 - 00:26:44 | 200 |      1.0756ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 00:27:15 | 401 |       398.8µs |             ::1 | POST     "/journal/api/v1/"
+[GIN] 2024/09/26 - 00:27:25 | 200 |      1.7366ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 00:27:53 | 201 |      2.3591ms |             ::1 | POST     "/journal/api/v1/"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/26 - 00:56:24 | 200 |       383.3µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/26 - 00:56:24 | 200 |       693.2µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/26 - 00:56:24 | 200 |      1.7867ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/26 - 00:56:24 | 200 |       587.5µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/26 - 00:56:25 | 200 |       646.1µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/26 - 00:56:25 | 200 |       999.6µs |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/26 - 00:56:40 | 200 |      8.8676ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 00:58:01 | 500 |      7.7875ms |             ::1 | POST     "/journal/api/v1/"
+[GIN] 2024/09/26 - 00:58:34 | 500 |      3.7206ms |             ::1 | POST     "/journal/api/v1/"
+[GIN] 2024/09/26 - 00:58:46 | 500 |       2.447ms |             ::1 | POST     "/journal/api/v1/"
+[GIN] 2024/09/26 - 00:59:17 | 201 |     11.6704ms |             ::1 | POST     "/journal/api/v1/"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/26 - 01:29:49 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/26 - 01:29:49 | 200 |            0s |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/26 - 01:29:49 | 200 |            0s |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/26 - 01:29:49 | 200 |      2.0086ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/26 - 01:29:49 | 200 |         507µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/26 - 01:29:49 | 200 |       617.2µs |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/26 - 01:30:09 | 400 |      7.5318ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 01:30:47 | 200 |     11.6471ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 01:30:49 | 200 |       7.808ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 01:31:44 | 403 |            0s |             ::1 | POST     "/journal/api/v1/notes"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN-debug] POST   /journal/api/v1/my-notes  --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN] 2024/09/26 - 01:33:08 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/26 - 01:33:08 | 200 |       184.8µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/26 - 01:33:08 | 200 |       184.8µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/26 - 01:33:08 | 200 |     13.3293ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/26 - 01:33:08 | 200 |      6.9897ms |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/26 - 01:33:08 | 200 |      3.5093ms |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/26 - 01:33:18 | 200 |      7.2074ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 01:34:00 | 403 |            0s |             ::1 | POST     "/journal/api/v1/my-notes"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN-debug] POST   /journal/api/v1/my-notes  --> e-dars/pkg/controllers.GetJournalNotesByStudent (4 handlers)
+[GIN] 2024/09/26 - 01:35:43 | 200 |            0s |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/26 - 01:35:43 | 200 |         384µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/26 - 01:35:43 | 200 |         868µs |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/26 - 01:35:43 | 200 |       507.7µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/26 - 01:35:43 | 200 |      1.2839ms |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/26 - 01:35:43 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/26 - 01:36:02 | 200 |      1.3536ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 01:36:46 | 200 |     13.2493ms |             ::1 | POST     "/journal/api/v1/my-notes"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN-debug] POST   /journal/api/v1/my-notes  --> e-dars/pkg/controllers.GetJournalNotesByStudent (4 handlers)
+[GIN] 2024/09/26 - 02:09:29 | 200 |       454.5µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/26 - 02:09:29 | 200 |            0s |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/26 - 02:09:29 | 200 |       508.7µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/26 - 02:09:29 | 200 |      2.2209ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/26 - 02:09:29 | 200 |      1.0452ms |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/26 - 02:09:29 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/26 - 02:09:43 | 200 |      8.8348ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 02:10:25 | 404 |            0s |             ::1 | POST     "/journal/api/v1/teacher-notes"
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[GIN-debug] GET    /ping                     --> e-dars/pkg/controllers.PingPong (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-up      --> e-dars/pkg/controllers.SignUp (3 handlers)
+[GIN-debug] POST   /auth/api/v1/sign-in      --> e-dars/pkg/controllers.SignIn (3 handlers)
+[GIN-debug] GET    /users/api/v1/            --> e-dars/pkg/controllers.GetAllUsers (4 handlers)
+[GIN-debug] GET    /users/api/v1/:id         --> e-dars/pkg/controllers.GetUserByID (4 handlers)
+[GIN-debug] POST   /users/api/v1/            --> e-dars/pkg/controllers.CreateNewUser (4 handlers)
+[GIN-debug] PUT    /users/api/v1/:id         --> e-dars/pkg/controllers.UpdateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/deactivate/:id --> e-dars/pkg/controllers.DeActivateUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/activate/:id --> e-dars/pkg/controllers.ActivateUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/delete/:id  --> e-dars/pkg/controllers.DeleteUser (4 handlers)
+[GIN-debug] DELETE /users/api/v1/return/:id  --> e-dars/pkg/controllers.ReturnUser (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/reset-password/:id --> e-dars/pkg/controllers.ResetUserPasswordByAdmin (4 handlers)
+[GIN-debug] PATCH  /users/api/v1/change-password --> e-dars/pkg/controllers.ChangeOwnPasswordByUser (4 handlers)
+[GIN-debug] POST   /classes/api/v1/          --> e-dars/pkg/controllers.CreateNewClass (4 handlers)
+[GIN-debug] GET    /classes/api/v1/          --> e-dars/pkg/controllers.GetAllClasses (4 handlers)
+[GIN-debug] GET    /classes/api/v1/:id       --> e-dars/pkg/controllers.GetClassByID (4 handlers)
+[GIN-debug] POST   /classes/api/v1/set       --> e-dars/pkg/controllers.SetClassTeacher (4 handlers)
+[GIN-debug] PUT    /classes/api/v1/update/:id --> e-dars/pkg/controllers.UpdateClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteClass (4 handlers)
+[GIN-debug] DELETE /classes/api/v1/return/:id --> e-dars/pkg/controllers.ReturnClass (4 handlers)
+[GIN-debug] POST   /schedules/api/v1/        --> e-dars/pkg/controllers.CreateNewScheduleNote (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/        --> e-dars/pkg/controllers.GetAllScheduleNotes (4 handlers)
+[GIN-debug] GET    /schedules/api/v1/:id     --> e-dars/pkg/controllers.GetScheduleNoteByID (4 handlers)
+[GIN-debug] PUT    /schedules/api/v1/update/:id --> e-dars/pkg/controllers.UpdateScheduleNote (4 handlers)
+[GIN-debug] DELETE /schedules/api/v1/delete/:id --> e-dars/pkg/controllers.DeleteScheduleNote (4 handlers)
+[GIN-debug] POST   /journal/api/v1/          --> e-dars/pkg/controllers.CreateJournalNote (4 handlers)
+[GIN-debug] GET    /journal/api/v1/          --> e-dars/pkg/controllers.GetAllJournalNotes (4 handlers)
+[GIN-debug] GET    /journal/api/v1/:id       --> e-dars/pkg/controllers.GetJournalNoteByID (4 handlers)
+[GIN-debug] POST   /journal/api/v1/notes     --> e-dars/pkg/controllers.GetJournalNotesByParentIDAndDate (4 handlers)
+[GIN-debug] POST   /journal/api/v1/my-notes  --> e-dars/pkg/controllers.GetJournalNotesByStudent (4 handlers)
+[GIN-debug] POST   /journal/api/v1/teacher-notes --> e-dars/pkg/controllers.GetJournalNotesByTeacher (4 handlers)
+[GIN] 2024/09/26 - 02:11:06 | 200 |      1.0077ms |             ::1 | GET      "/swagger/index.html"
+[GIN] 2024/09/26 - 02:11:06 | 200 |      1.1393ms |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2024/09/26 - 02:11:06 | 200 |            0s |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2024/09/26 - 02:11:06 | 200 |      1.7836ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2024/09/26 - 02:11:06 | 200 |       859.1µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2024/09/26 - 02:11:06 | 200 |            0s |             ::1 | GET      "/swagger/favicon-32x32.png"
+[GIN] 2024/09/26 - 02:11:28 | 200 |      1.6734ms |             ::1 | POST     "/auth/api/v1/sign-in"
+[GIN] 2024/09/26 - 02:12:14 | 200 |     10.6566ms |             ::1 | POST     "/journal/api/v1/teacher-notes"

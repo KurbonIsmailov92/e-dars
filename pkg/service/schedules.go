@@ -3,6 +3,7 @@ package service
 import (
 	"e-dars/internals/models"
 	"e-dars/pkg/repository"
+	"time"
 )
 
 func CreateNewScheduleNote(scheduleNote *models.Schedule) error {
@@ -10,15 +11,6 @@ func CreateNewScheduleNote(scheduleNote *models.Schedule) error {
 		return err
 	}
 
-	scheduleNoteForJournal, err := repository.GetLastCreatedScheduleNote()
-	if err != nil {
-		return err
-	}
-
-	if err = repository.CreateJournalNote(scheduleNoteForJournal.ID,
-		scheduleNoteForJournal.PlannedDate); err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -47,7 +39,13 @@ func UpdateScheduleNoteByID(id uint, scheduleNote models.Schedule) (err error) {
 
 func DeleteScheduleNoteByID(id uint) (err error) {
 
-	if _, err = repository.GetScheduleNoteByID(id); err != nil {
+	var scheduleNote models.Schedule
+
+	if scheduleNote, err = repository.GetScheduleNoteByID(id); err != nil {
+		return err
+	}
+
+	if !scheduleNote.PlannedDate.Before(time.Now()) {
 		return err
 	}
 

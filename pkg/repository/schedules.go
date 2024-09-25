@@ -53,6 +53,7 @@ func UpdateScheduleNoteByID(id uint, note, noteFromDB models.Schedule) (err erro
 }
 
 func DeleteScheduleNoteByID(id uint) error {
+
 	err := db.GetDBConnection().
 		Model(&models.Schedule{}).
 		Where("id = ?", id).

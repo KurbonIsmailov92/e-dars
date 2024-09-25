@@ -63,6 +63,8 @@ func InitRoutes() *gin.Engine {
 		journalG.GET("/", GetAllJournalNotes)
 		journalG.GET("/:id", GetJournalNoteByID)
 		journalG.POST("/notes", GetJournalNotesByParentIDAndDate)
+		journalG.POST("/my-notes", GetJournalNotesByStudent)
+		journalG.POST("/teacher-notes", GetJournalNotesByTeacher)
 	}
 
 	return router
