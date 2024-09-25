@@ -48,6 +48,41 @@ definitions:
       id:
         type: integer
     type: object
+  models.JournalDates:
+    properties:
+      date_from:
+        type: string
+      date_to:
+        type: string
+    type: object
+  models.JournalNote:
+    properties:
+      date:
+        type: string
+      id:
+        type: integer
+      mark:
+        $ref: '#/definitions/models.Mark'
+      mark_id:
+        type: integer
+      marked_at:
+        type: string
+      schedule_id:
+        type: integer
+      schedule_note:
+        $ref: '#/definitions/models.Schedule'
+      user:
+        $ref: '#/definitions/models.User'
+      user_id:
+        type: integer
+    type: object
+  models.Mark:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+    type: object
   models.Role:
     properties:
       code:
@@ -101,6 +136,28 @@ definitions:
           $ref: '#/definitions/models.User'
         type: array
     type: object
+  models.SwagJournalNote:
+    properties:
+      schedule_id:
+        type: integer
+    type: object
+  models.SwagJournalNotesOfChildren:
+    properties:
+      class:
+        type: string
+      class_room:
+        type: string
+      date:
+        type: string
+      group:
+        type: string
+      mark:
+        type: string
+      student_name:
+        type: string
+      teacher_name:
+        type: string
+    type: object
   models.SwagSchedule:
     properties:
       class_id:
@@ -121,8 +178,6 @@ definitions:
       password:
         type: string
       phone:
-        type: string
-      role_code:
         type: string
       username:
         type: string
@@ -168,6 +223,8 @@ definitions:
         type: boolean
       is_deleted:
         type: boolean
+      parent_id:
+        type: integer
       password:
         type: string
       phone:
@@ -520,6 +577,145 @@ paths:
       summary: Update Class
       tags:
       - classes
+  /journal/api/v1/:
+    get:
+      description: Get list of all Journal Notes
+      operationId: get-all-journal-notes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.JournalNote'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get All Journal Notes
+      tags:
+      - journal
+    post:
+      consumes:
+      - application/json
+      description: Create new Journal Note. Time must be in this format "2024-09-28T08:30:00Z"
+      operationId: create-journal-note
+      parameters:
+      - description: New Journal Note info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagJournalNote'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Journal Note
+      tags:
+      - journal
+  /journal/api/v1/{id}:
+    get:
+      description: get journal note by ID
+      operationId: get-journal-note-by-id
+      parameters:
+      - description: id of the journal note
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SwagJournalNotesOfChildren'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Journal Note By ID
+      tags:
+      - journal
+  /journal/api/v1/notes:
+    post:
+      consumes:
+      - application/json
+      description: Create new Journal Note. Time must be in this format "2024-09-28T08:30:00Z"
+      operationId: get-journal-note-of-child
+      parameters:
+      - description: Date From and Date to Format should be lile 2024-09-28
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.JournalDates'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SwagJournalNotesOfChildren'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Journal Note Of Child
+      tags:
+      - journal
   /ping:
     get:
       consumes:

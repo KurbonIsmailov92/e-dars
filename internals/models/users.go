@@ -19,13 +19,13 @@ type User struct {
 	Role          Role      `gorm:"foreignKey:RoleCode" json:"role"`
 	GroupID       *uint     `gorm:"default null" json:"group_id"`
 	Group         Group     `gorm:"foreignKey:GroupID" json:"group"`
+	ParentID      *uint     `gorm:"default:NULL" json:"parent_id"`
 }
 
 type SwagUser struct {
 	FullName string `json:"full_name"`
 	Username string `json:"username" gorm:"unique"`
 	Password string `json:"password" gorm:"not null"`
-	RoleCode string `json:"role_code" gorm:"not null"`
 	Email    string `json:"email" gorm:"size:255;unique;"`
 	Phone    string `json:"phone" gorm:"size:20;"`
 }

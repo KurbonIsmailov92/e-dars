@@ -9,6 +9,16 @@ func CreateNewScheduleNote(scheduleNote *models.Schedule) error {
 	if err := repository.CreateNewScheduleNote(scheduleNote); err != nil {
 		return err
 	}
+
+	scheduleNoteForJournal, err := repository.GetLastCreatedScheduleNote()
+	if err != nil {
+		return err
+	}
+
+	if err = repository.CreateJournalNote(scheduleNoteForJournal.ID,
+		scheduleNoteForJournal.PlannedDate); err != nil {
+		return err
+	}
 	return nil
 }
 

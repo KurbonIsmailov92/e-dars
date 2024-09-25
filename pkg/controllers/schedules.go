@@ -42,8 +42,7 @@ func CreateNewScheduleNote(c *gin.Context) {
 		return
 	}
 
-	err := service.CreateNewScheduleNote(&note)
-	if err != nil {
+	if err := service.CreateNewScheduleNote(&note); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
@@ -82,7 +81,7 @@ func GetAllScheduleNotes(c *gin.Context) {
 		c.JSON(http.StatusNoContent, gin.H{"massage": "No notes found"})
 	}
 
-	logger.Info.Printf("[controllers] Successfully got all users")
+	logger.Info.Printf("[controllers] Successfully got all schedule notes")
 	c.JSON(http.StatusOK, gin.H{"Schedule Notes": notes})
 }
 

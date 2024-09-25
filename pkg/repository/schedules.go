@@ -63,3 +63,14 @@ func DeleteScheduleNoteByID(id uint) error {
 	}
 	return nil
 }
+
+func GetLastCreatedScheduleNote() (schedule models.Schedule, err error) {
+	err = db.GetDBConnection().
+		Order("id DESC").
+		First(&schedule).Error
+
+	if err != nil {
+		return models.Schedule{}, translateError(err)
+	}
+	return schedule, nil
+}

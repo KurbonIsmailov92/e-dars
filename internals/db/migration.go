@@ -5,7 +5,7 @@ import "e-dars/internals/models"
 func MigrateTables() error {
 	err := dbSession.AutoMigrate(models.Class{},
 		models.Group{},
-		models.JournalNotes{},
+		models.JournalNote{},
 		models.Mark{},
 		models.Schedule{},
 		models.User{},
