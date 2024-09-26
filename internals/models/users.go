@@ -19,7 +19,7 @@ type User struct {
 	Role          Role      `gorm:"foreignKey:RoleCode" json:"role"`
 	GroupID       *uint     `gorm:"default null" json:"group_id"`
 	Group         Group     `gorm:"foreignKey:GroupID" json:"group"`
-	ParentID      *uint     `gorm:"default:NULL" json:"parent_id"`
+	ParentID      *uint     `gorm:"default:null" json:"parent_id"`
 }
 
 type SwagUser struct {
@@ -57,4 +57,12 @@ type SwagUserForUpdateByAdmin struct {
 	IsActive  bool   `json:"is_active" gorm:"default:true"`
 	IsDeleted bool   `json:"is_deleted" gorm:"default:false"`
 	GroupID   *uint  `json:"group_id"`
+}
+
+type SwagUserForParentSetting struct {
+	ParentID uint `json:"parent_id"`
+}
+
+type SwagUserForRoleSetting struct {
+	RoleCode string `json:"role_code"`
 }

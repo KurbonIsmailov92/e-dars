@@ -180,3 +180,42 @@ func GetTeacherIDFromDB(classID uint) (teacherID uint, err error) {
 	}
 	return teacherID, nil
 }
+
+func SetAdminRoleToUser(id uint) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{
+			"role_code": "admin",
+		}).Error; err != nil {
+		logger.Error.Printf("[repository.SetAdminRoleToUser] Error setting Admin role to user: %v", err)
+		return err
+	}
+	return nil
+}
+
+func SetParentToUser(userID, parentID uint) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", userID).
+		Updates(map[string]interface{}{
+			"parent_id": parentID,
+		}).Error; err != nil {
+		logger.Error.Printf("[repository.SetParentToUser] Error setting Parent to user: %v", err)
+		return err
+	}
+	return nil
+}
+
+func SetRoleToUser(userID uint, roleCode string) error {
+	if err := db.GetDBConnection().
+		Model(&models.User{}).
+		Where("id = ?", userID).
+		Updates(map[string]interface{}{
+			"role_code": roleCode,
+		}).Error; err != nil {
+		logger.Error.Printf("[repository.SetRoleToUser] Error setting Role to user: %v", err)
+		return err
+	}
+	return nil
+}

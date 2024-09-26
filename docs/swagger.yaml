@@ -210,6 +210,16 @@ definitions:
       username:
         type: string
     type: object
+  models.SwagUserForParentSetting:
+    properties:
+      parent_id:
+        type: integer
+    type: object
+  models.SwagUserForRoleSetting:
+    properties:
+      role_code:
+        type: string
+    type: object
   models.SwagUserForShow:
     properties:
       email:
@@ -1469,6 +1479,126 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Reset user`s password to default by ID
+      tags:
+      - users
+  /users/api/v1/set-admin/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Set Admin Role To User by ID
+      operationId: admin-user
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Set Admin Role To User
+      tags:
+      - users
+  /users/api/v1/set-parent/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Set Parent To User by ID
+      operationId: parent-user
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ' Parent ID'
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagUserForParentSetting'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Set Parent To User
+      tags:
+      - users
+  /users/api/v1/set-role/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Set Role To User by ID
+      operationId: role-user
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Role code (teacher, student, parent)
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SwagUserForRoleSetting'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Set Role To User
       tags:
       - users
 securityDefinitions:

@@ -250,7 +250,7 @@ func GetJournalNotesByTeacher(c *gin.Context) {
 		return
 	}
 
-	notes, err := service.GetJournalNotesByTeacher(uint(id), dates)
+	notes, err := service.GetJournalNotesByStudent(uint(id), dates)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

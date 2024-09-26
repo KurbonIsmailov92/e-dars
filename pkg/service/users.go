@@ -117,3 +117,34 @@ func ChangeOwnPasswordByUser(id uint, newPassword, oldPassword string) error {
 
 	return nil
 }
+
+func SetAdminRoleToUser(id uint) error {
+	if err := repository.SetAdminRoleToUser(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func SetParentToUser(userid, parenID uint) error {
+
+	parent, err := repository.GetUserByID(parenID)
+	if err != nil {
+		return err
+	}
+
+	if parent.RoleCode != "parent" {
+		return errors.New("user is not a parent")
+	}
+
+	if err := repository.SetParentToUser(userid, parenID); err != nil {
+		return err
+	}
+	return nil
+}
+
+func SetRoleToUser(userid uint, roleCode string) error {
+	if err := repository.SetRoleToUser(userid, roleCode); err != nil {
+		return err
+	}
+	return nil
+}

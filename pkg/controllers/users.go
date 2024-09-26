@@ -389,3 +389,127 @@ func ChangeOwnPasswordByUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Password changed successfully"})
 }
+
+// SetAdminRoleToUser
+// @Summary Set Admin Role To User
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Set Admin Role To User by ID
+// @ID admin-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/api/v1/set-admin/{id} [patch]
+func SetAdminRoleToUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to return user",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers.SetAdminRoleToUser] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.SetAdminRoleToUser(uint(id)); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers.SetAdminRoleToUser] Successfully turned user`s role to Admin")
+	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully!"})
+}
+
+// SetParentToUser
+// @Summary Set Parent To User
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Set Parent To User by ID
+// @ID parent-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Param input body models.SwagUserForParentSetting true " Parent ID"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/api/v1/set-parent/{id} [patch]
+func SetParentToUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to return user",
+		})
+		return
+	}
+
+	var user models.User
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers.SetParentToUser] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.SetParentToUser(uint(id), *user.ParentID); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers.SetParentToUser] Successfully set user`s parent")
+	c.JSON(http.StatusOK, gin.H{"message": "Parent set successfully!"})
+}
+
+// SetRoleToUser
+// @Summary Set Role To User
+// @Security ApiKeyAuth
+// @Tags users
+// @Description Set Role To User by ID
+// @ID role-user
+// @Accept json
+// @Produce json
+// @Param id path integer true "id of the user"
+// @Param input body models.SwagUserForRoleSetting true "Role code (teacher, student, parent)"
+// @Success 200 {object} defaultResponse
+// @Failure 400 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Failure default {object} ErrorResponse
+// @Router /users/api/v1/set-role/{id} [patch]
+func SetRoleToUser(c *gin.Context) {
+
+	if c.GetString(userRoleCtx) != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "You do not have permission to return user",
+		})
+		return
+	}
+
+	var user models.User
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logger.Error.Printf("[controllers.SetRoleToUser] Invalid user ID: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+	}
+	if err = service.SetRoleToUser(uint(id), user.RoleCode); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+	logger.Info.Printf("[controllers.SetRoleToUser] Successfully set user`s role")
+	c.JSON(http.StatusOK, gin.H{"message": "Role set successfully!"})
+}

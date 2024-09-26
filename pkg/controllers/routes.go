@@ -34,6 +34,9 @@ func InitRoutes() *gin.Engine {
 		UsersG.DELETE("/return/:id", ReturnUser)
 		UsersG.PATCH("/reset-password/:id", ResetUserPasswordByAdmin)
 		UsersG.PATCH("/change-password", ChangeOwnPasswordByUser)
+		UsersG.PATCH("/set-admin/:id", SetAdminRoleToUser)
+		UsersG.PATCH("/set-parent/:id", SetParentToUser)
+		UsersG.PATCH("/set-role/:id", SetRoleToUser)
 	}
 
 	classesG := router.Group("classes/api/v1", checkUserAuthentication)
