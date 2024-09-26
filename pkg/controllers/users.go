@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"e-dars/errs"
 	"e-dars/internals/models"
 	"e-dars/logger"
 	"e-dars/pkg/service"
@@ -26,28 +27,22 @@ import (
 func CreateNewUser(c *gin.Context) {
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
 	}
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to create a new user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 
 		return
 	}
 
 	err := service.CreateNewUser(&user)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-
+		handleError(c, err)
 		return
 	}
 
+	logger.Info.Printf("[controllers.CreateNewUser] User created successfully")
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "User created successfully",
 	})
@@ -69,18 +64,17 @@ func CreateNewUser(c *gin.Context) {
 func GetAllUsers(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see all users",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	users, err := service.GetAllUsers()
 	if err != nil {
-		c.JSON(http.StatusNoContent, gin.H{"massage": "No users found"})
+		handleError(c, err)
+		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got all users: %v", users)
+	logger.Info.Printf("[controllers.GetAllUsers] Successfully got all users: %v", users)
 	c.JSON(http.StatusOK, gin.H{"users": users})
 }
 
@@ -101,24 +95,22 @@ func GetUserByID(c *gin.Context) {
 	var user models.User
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Entered wrong id: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		logger.Error.Printf("[controllers.GetUserByID] Entered wrong id: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if user, err = service.GetUserByID(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"massage": "User not found"})
+		handleError(c, err)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully got user: %v", user)
+	logger.Info.Printf("[controllers.GetUserByID] Successfully got user: %v", user)
 	c.JSON(http.StatusOK, gin.H{"user": user})
 }
 
@@ -141,31 +133,29 @@ func UpdateUser(c *gin.Context) {
 	var user models.User
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to update user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		logger.Error.Printf("[controllers.UpdateUser] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if err = c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad Request"})
+		handleError(c, err)
 		return
 	}
 
 	user.ID = uint(id)
 
 	if err = service.UpdateUser(user.ID, user); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"massage": "User not found"})
+		handleError(c, err)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully updated user: %v", user)
+	logger.Info.Printf("[controllers.UpdateUser] Successfully updated user: %v", user)
 	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully!"})
 }
 
@@ -186,23 +176,21 @@ func UpdateUser(c *gin.Context) {
 func DeActivateUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to deactivate user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-
-	}
-	if err = service.DeActiveUser(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		logger.Error.Printf("[controllers.DeActivateUser] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully deactivated user: %v", id)
+	if err = service.DeActiveUser(uint(id)); err != nil {
+		handleError(c, err)
+		return
+	}
+	logger.Info.Printf("[controllers.DeActivateUser] Successfully deactivated user: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "User deactivated!"})
 }
 
@@ -223,22 +211,21 @@ func DeActivateUser(c *gin.Context) {
 func ActivateUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to activate user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-	}
-	if err = service.ActivateUser(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		logger.Error.Printf("[controllers.ActivateUser] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully activated user: %v", id)
+	if err = service.ActivateUser(uint(id)); err != nil {
+		handleError(c, errs.ErrRecordNotFound)
+		return
+	}
+	logger.Info.Printf("[controllers.ActivateUser] Successfully activated user: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "User activated!"})
 }
 
@@ -259,22 +246,21 @@ func ActivateUser(c *gin.Context) {
 func DeleteUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to delete user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-	}
-	if err = service.DeleteUser(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		logger.Error.Printf("[controllers.DeleteUser] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully deleted user: %v", id)
+	if err = service.DeleteUser(uint(id)); err != nil {
+		handleError(c, errs.ErrRecordNotFound)
+		return
+	}
+	logger.Info.Printf("[controllers.DeleteUser] Successfully deleted user: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "User Deleted!"})
 }
 
@@ -295,22 +281,21 @@ func DeleteUser(c *gin.Context) {
 func ReturnUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to return user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-	}
-	if err = service.ReturnUser(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		logger.Error.Printf("[controllers.ReturnUser] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully returned user: %v", id)
+	if err = service.ReturnUser(uint(id)); err != nil {
+		handleError(c, err)
+		return
+	}
+	logger.Info.Printf("[controllers.ReturnUser] Successfully returned user: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "User Returned successfully!"})
 }
 
@@ -330,22 +315,21 @@ func ReturnUser(c *gin.Context) {
 func ResetUserPasswordByAdmin(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to activate user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-	}
-	if err = service.ResetUserPassToDefault(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		logger.Error.Printf("[controllers.ResetUserPasswordByAdmin] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully reseted user`s password to default: %v", id)
+	if err = service.ResetUserPassToDefault(uint(id)); err != nil {
+		handleError(c, err)
+		return
+	}
+	logger.Info.Printf("[controllers.ResetUserPasswordByAdmin] Successfully reseted user`s password to default: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "Password reseted successfully!"})
 }
 
@@ -368,25 +352,24 @@ func ChangeOwnPasswordByUser(c *gin.Context) {
 	var userPasswords models.UserPassword
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
-
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		logger.Error.Printf("[controllers.ChangeOwnPasswordByUser] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if err = c.BindJSON(&userPasswords); err != nil {
-		logger.Error.Printf("[controllers] Invalid JSON: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad Request"})
+		logger.Error.Printf("[controllers.ChangeOwnPasswordByUser] Invalid JSON: %v", err)
+		handleError(c, err)
 		return
 	}
 
 	if err = service.ChangeOwnPasswordByUser(uint(id), userPasswords.Password,
 		userPasswords.OldPassword); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Incorrect old password"})
+		handleError(c, errs.ErrIncorrectOldPassword)
 		return
 	}
-
+	logger.Info.Printf("[controllers.ChangeOwnPasswordByUser] Successfully changed own password: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "Password changed successfully"})
 }
 
@@ -407,19 +390,18 @@ func ChangeOwnPasswordByUser(c *gin.Context) {
 func SetAdminRoleToUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to return user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		logger.Error.Printf("[controllers.SetAdminRoleToUser] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		handleError(c, errs.ErrFailedValidation)
+		return
 	}
 	if err = service.SetAdminRoleToUser(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		handleError(c, err)
 		return
 	}
 	logger.Info.Printf("[controllers.SetAdminRoleToUser] Successfully turned user`s role to Admin")
@@ -444,26 +426,24 @@ func SetAdminRoleToUser(c *gin.Context) {
 func SetParentToUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to return user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
+		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		logger.Error.Printf("[controllers.SetParentToUser] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		handleError(c, errs.ErrFailedValidation)
+		return
 	}
 	if err = service.SetParentToUser(uint(id), *user.ParentID); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		handleError(c, err)
 		return
 	}
 	logger.Info.Printf("[controllers.SetParentToUser] Successfully set user`s parent")
@@ -488,26 +468,22 @@ func SetParentToUser(c *gin.Context) {
 func SetRoleToUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to return user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	var user models.User
 	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		logger.Error.Printf("[controllers.SetRoleToUser] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		handleError(c, errs.ErrFailedValidation)
 	}
 	if err = service.SetRoleToUser(uint(id), user.RoleCode); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		handleError(c, err)
 		return
 	}
 	logger.Info.Printf("[controllers.SetRoleToUser] Successfully set user`s role")

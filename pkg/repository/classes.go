@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"e-dars/errs"
 	"e-dars/internals/db"
 	"e-dars/internals/models"
 	"e-dars/logger"
@@ -12,7 +13,8 @@ func SetClassTeacher(classID, teacherID uint) error {
 		Table("class_users").
 		Create(&models.ClassUser{ClassID: classID,
 			UserID: teacherID}).Error; err != nil {
-		logger.Error.Printf("[repository SetClassTeacher] Failed to set teacher for class: %v", err)
+		logger.Error.Printf("[repository.SetClassTeacher] Failed to set teacher for class: %v", err)
+		err = errs.ErrFailedSetTeacherToClass
 		return err
 	}
 	return nil
@@ -39,7 +41,6 @@ func CreateNewClass(class *models.Class) (err error) {
 		return translateError(err)
 	}
 
-	logger.Info.Printf("[repository.CreateNewClass] Successfully created class with teachers")
 	return nil
 }
 
@@ -61,8 +62,8 @@ func GetAllClasses() (classes []models.Class, err error) {
 		Preload("Teacher").
 		Find(&classes).Error
 	if err != nil {
-		logger.Error.Printf("[repository GetAllClasses] Error getting all classes: %v", err)
-		return nil, err
+		logger.Error.Printf("[repository.GetAllClasses] Error getting all classes: %v", err)
+		return nil, translateError(err)
 	}
 	return classes, nil
 }
@@ -80,14 +81,13 @@ func GetClassByID(classID uint) (class models.Class, err error) {
 }
 
 func UpdateClass(id uint, class, classFromDB models.Class) (err error) {
-	if err := db.GetDBConnection().
+	if err = db.GetDBConnection().
 		Model(&classFromDB).
 		Updates(class).
 		Where("id = ?", id).Error; err != nil {
-		logger.Error.Printf("[repository UpdateClass] Error updating class: %v", err)
-		return err
+		logger.Error.Printf("[repository.UpdateClass] Error updating class: %v", err)
+		return translateError(err)
 	}
-
 	return nil
 }
 
@@ -99,8 +99,8 @@ func DeleteClassByID(id uint) error {
 			"is_deleted": true,
 			"deleted_at": time.Now(),
 		}).Error; err != nil {
-		logger.Error.Printf("[repository DeleteClassByID] Error deleting class: %v", err)
-		return err
+		logger.Error.Printf("[repository.DeleteClassByID] Error deleting class: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -113,8 +113,8 @@ func ReturnClassByID(id uint) error {
 			"is_deleted": false,
 			"deleted_at": nil,
 		}).Error; err != nil {
-		logger.Error.Printf("[repository ReturnClassByID] Error returning class: %v", err)
-		return err
+		logger.Error.Printf("[repository.ReturnClassByID] Error returning class: %v", err)
+		return translateError(err)
 	}
 	return nil
 }

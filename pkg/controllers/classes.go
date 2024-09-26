@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"e-dars/errs"
 	"e-dars/internals/models"
 	"e-dars/logger"
 	"e-dars/pkg/service"
@@ -13,7 +14,7 @@ import (
 // @Summary Create Class
 // @Security ApiKeyAuth
 // @Tags classes
-// @Description create new class
+// @Description Create new class
 // @ID create-class
 // @Accept json
 // @Produce json
@@ -26,28 +27,23 @@ import (
 func CreateNewClass(c *gin.Context) {
 	var class models.Class
 	if err := c.BindJSON(&class); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
+		return
 	}
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to create a new class",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 
 		return
 	}
 
 	err := service.CreateNewClass(&class)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-
+		handleError(c, err)
 		return
 	}
 
+	logger.Info.Printf("[controller.CreateNewClass] Created New Class success]")
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Class created successfully",
 	})
@@ -69,18 +65,16 @@ func CreateNewClass(c *gin.Context) {
 func GetAllClasses(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see all classes",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	classes, err := service.GetAllClasses()
 	if err != nil {
-		c.JSON(http.StatusNoContent, gin.H{"massage": "No classes found"})
+		handleError(c, err)
 	}
 
-	logger.Info.Printf("[controllers] Successfully got all classes")
+	logger.Info.Printf("[controllers.GetAllClasses] Successfully got all classes")
 	c.JSON(http.StatusOK, gin.H{"classes": classes})
 }
 
@@ -99,26 +93,23 @@ func GetAllClasses(c *gin.Context) {
 // @Router /classes/api/v1/{id} [get]
 func GetClassByID(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see a class",
-		})
+		handleError(c, errs.ErrPermissionDenied)
+		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
+		return
 	}
 
 	class, err := service.GetClassByID(uint(id))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
+		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got class by id %v", id)
+	logger.Info.Printf("[controllers.GetClassByID] Successfully got class by id %v", id)
 	c.JSON(http.StatusOK, gin.H{"class": class})
 }
 
@@ -138,24 +129,22 @@ func GetClassByID(c *gin.Context) {
 // @Router /classes/api/v1/set/ [post]
 func SetClassTeacher(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to set classes to teachers",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	var set models.ClassUser
 
 	if err := c.BindJSON(&set); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad Request"})
+		handleError(c, err)
 		return
 	}
 
 	if err := service.SetClassTeacher(set.ClassID, set.UserID); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"massage": err.Error()})
+		handleError(c, err)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully set class to teacher")
+	logger.Info.Printf("[controllers.SetClassTeacher] Successfully set class to teacher")
 	c.JSON(http.StatusCreated, gin.H{"message": "Class set successfully to teacher"})
 
 }
@@ -177,31 +166,30 @@ func SetClassTeacher(c *gin.Context) {
 // @Router /classes/api/v1/update/{id} [put]
 func UpdateClass(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to update user",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	var class models.Class
 	if err := c.BindJSON(&class); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		handleError(c, err)
+		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid class ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid class ID"})
+		logger.Error.Printf("[controllers.UpdateClass] Invalid class ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	class.ID = uint(id)
 
-	if err := service.UpdateClass(uint(id), class); err != nil {
-		logger.Error.Printf("[controllers] Failed to update class %v: %v", id, err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	if err = service.UpdateClass(uint(id), class); err != nil {
+		handleError(c, err)
+		return
 	}
-	logger.Info.Printf("[controllers UpdateClass] Successfully updated class to %v", class)
+	logger.Info.Printf("[controllers.UpdateClass] Successfully updated class to %v", class)
 	c.JSON(http.StatusOK, gin.H{"message": "Class updated successfully"})
 
 }
@@ -223,22 +211,21 @@ func UpdateClass(c *gin.Context) {
 func DeleteClass(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to delete class",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		logger.Error.Printf("[controllers] Invalid class ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid class ID"})
-	}
-	if err = service.DeleteClass(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "Class not found"})
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully deleted class: %v", id)
+	if err = service.DeleteClass(uint(id)); err != nil {
+		handleError(c, err)
+		return
+	}
+	logger.Info.Printf("[controllers.DeleteClass] Successfully deleted class: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "Class Deleted!"})
 }
 
@@ -259,21 +246,20 @@ func DeleteClass(c *gin.Context) {
 func ReturnClass(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to return class",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid class ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid class ID"})
-	}
-	if err = service.ReturnClass(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "Class not found"})
+		logger.Error.Printf("[controllers.ReturnClass] Invalid class ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully returned class: %v", id)
+	if err = service.ReturnClass(uint(id)); err != nil {
+		handleError(c, err)
+		return
+	}
+	logger.Info.Printf("[controllers.ReturnClass] Successfully returned class: %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "Class Returned successfully!"})
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"e-dars/errs"
 	"e-dars/internals/models"
 	"e-dars/logger"
 	"e-dars/pkg/service"
@@ -27,30 +28,28 @@ func CreateJournalNote(c *gin.Context) {
 	var note models.MarkSetter
 
 	if c.GetString(userRoleCtx) != "teacher" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to create a new schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
-		logger.Error.Printf("Failed to convert string to int: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
-	if err := c.BindJSON(&note); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err = c.BindJSON(&note); err != nil {
+		handleError(c, err)
 		return
 	}
 
-	if err := service.CreateJournalNote(&note, uint(id)); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	if err = service.CreateJournalNote(&note, uint(id)); err != nil {
+		handleError(c, err)
 		return
 	}
 
-	logger.Info.Printf("Created new journal note")
-	c.JSON(http.StatusCreated, gin.H{"error": "journal note created"})
+	logger.Info.Printf("[controllers.CreateJournalNote] Created new journal note")
+	newDefaultResponse("Created new journal note")
 }
 
 // GetAllJournalNotes
@@ -67,19 +66,17 @@ func CreateJournalNote(c *gin.Context) {
 // @Router /journal/api/v1/ [get]
 func GetAllJournalNotes(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see all users",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	notes, err := service.GetAllJournalNotes()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got all schedule notes")
+	logger.Info.Printf("[controllers.GetAllJournalNotes] Successfully got all schedule notes")
 	c.JSON(http.StatusOK, gin.H{"Journal notes": notes})
 }
 
@@ -98,9 +95,7 @@ func GetAllJournalNotes(c *gin.Context) {
 // @Router /journal/api/v1/{id} [get]
 func GetJournalNoteByID(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to create a new schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
@@ -108,15 +103,15 @@ func GetJournalNoteByID(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if note, err = service.GetJournalNoteByID(uint(id)); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully got journal note")
+	logger.Info.Printf("[controllers.GetJournalNoteByID] Successfully got journal note")
 	c.JSON(http.StatusOK, gin.H{"journal note": note})
 }
 
@@ -136,9 +131,7 @@ func GetJournalNoteByID(c *gin.Context) {
 // @Router /journal/api/v1/notes [post]
 func GetJournalNotesByParentIDAndDate(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "parent" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see journal notes of children",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
@@ -146,23 +139,23 @@ func GetJournalNotesByParentIDAndDate(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		logger.Error.Printf("[controllers.GetJournalNotesByParentIDAndDate] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if err = c.ShouldBindJSON(&dates); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 
 	notes, err := service.GetJournalNotesByParentIDAndDate(uint(id), dates)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got journal notes of child / children")
+	logger.Info.Printf("[controllers.GetJournalNotesByParentIDAndDate] Successfully got journal notes of child / children")
 	c.JSON(http.StatusOK, gin.H{"Journal notes": notes})
 
 }
@@ -183,9 +176,7 @@ func GetJournalNotesByParentIDAndDate(c *gin.Context) {
 // @Router /journal/api/v1/my-notes [post]
 func GetJournalNotesByStudent(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "student" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see others journal notes",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
@@ -193,23 +184,23 @@ func GetJournalNotesByStudent(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		logger.Error.Printf("[controllers.GetJournalNotesByStudent] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if err = c.ShouldBindJSON(&dates); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 
 	notes, err := service.GetJournalNotesByStudent(uint(id), dates)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got own journal notes ")
+	logger.Info.Printf("[controllers.GetJournalNotesByStudent] Successfully got own journal notes ")
 	c.JSON(http.StatusOK, gin.H{"Journal notes": notes})
 
 }
@@ -229,10 +220,9 @@ func GetJournalNotesByStudent(c *gin.Context) {
 // @Failure default {object} ErrorResponse
 // @Router /journal/api/v1/teacher-notes [post]
 func GetJournalNotesByTeacher(c *gin.Context) {
+
 	if c.GetString(userRoleCtx) != "teacher" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see others journal notes",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
@@ -240,23 +230,23 @@ func GetJournalNotesByTeacher(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid user ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		logger.Error.Printf("[controllers.GetJournalNotesByTeacher] Invalid user ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
-	if err = c.ShouldBindJSON(&dates); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err = c.BindJSON(&dates); err != nil {
+		handleError(c, err)
 		return
 	}
 
-	notes, err := service.GetJournalNotesByStudent(uint(id), dates)
+	notes, err := service.GetJournalNotesByTeacher(uint(id), dates)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got own journal notes ")
+	logger.Info.Printf("[controllers.GetJournalNotesByStudent] Successfully got own journal notes ")
 	c.JSON(http.StatusOK, gin.H{"Journal notes": notes})
 
 }

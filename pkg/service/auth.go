@@ -17,6 +17,10 @@ func SignIn(username, password string) (accessToken string, err error) {
 		return "", err
 	}
 
+	if !user.IsActive || user.IsDeleted {
+		return "Error:", errs.ErrUserDeactivatedOrDeleted
+	}
+
 	accessToken, err = GenerateToken(user.ID, user.Username, user.Role.Code)
 	if err != nil {
 		return "", err

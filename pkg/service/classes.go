@@ -6,7 +6,6 @@ import (
 	"e-dars/logger"
 	"e-dars/pkg/repository"
 	"errors"
-	"fmt"
 )
 
 func CreateNewClass(c *models.Class) error {
@@ -20,7 +19,7 @@ func CreateNewClass(c *models.Class) error {
 	}
 
 	err = repository.CreateNewClass(c)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
@@ -28,24 +27,23 @@ func CreateNewClass(c *models.Class) error {
 
 func SetClassTeacher(classID, teacherID uint) error {
 	teacher, err := repository.GetUserByID(teacherID)
-	fmt.Println(teacher.Role.Name)
 	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	if teacher.Role.Code != "teacher" {
-		logger.Error.Printf("[service SetClassTeacher] User is not teacher")
+		logger.Error.Printf("[service.SetClassTeacher] User is not teacher")
 		err = errs.ErrUserIsNotTeacher
 		return err
 	}
 
 	class, err := repository.GetClassByID(classID)
 	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
-		logger.Error.Printf("[service SetClassTeacher] There is no such class")
-		err = errs.ErrClassNotFound
+		logger.Error.Printf("[service.SetClassTeacher] There is no such class")
 		return err
 	}
 
-	if err := repository.SetClassTeacher(class.ID, teacher.ID); err != nil {
+	if err = repository.SetClassTeacher(class.ID, teacher.ID); err != nil {
+		err = errs.ErrFailedSetTeacherToClass
 		return err
 	}
 	return nil
@@ -53,7 +51,7 @@ func SetClassTeacher(classID, teacherID uint) error {
 
 func GetAllClasses() (classes []models.Class, err error) {
 	classes, err = repository.GetAllClasses()
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return nil, err
 	}
 	return classes, nil
@@ -61,7 +59,7 @@ func GetAllClasses() (classes []models.Class, err error) {
 
 func GetClassByID(id uint) (class models.Class, err error) {
 	class, err = repository.GetClassByID(id)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return class, err
 	}
 	return class, nil
@@ -69,21 +67,21 @@ func GetClassByID(id uint) (class models.Class, err error) {
 
 func UpdateClass(id uint, class models.Class) (err error) {
 	classFromDB, err := repository.GetClassByID(id)
-	if err = repository.UpdateClass(id, class, classFromDB); err != nil {
+	if err = repository.UpdateClass(id, class, classFromDB); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func DeleteClass(id uint) error {
-	if err := repository.DeleteClassByID(id); err != nil {
+	if err := repository.DeleteClassByID(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func ReturnClass(id uint) error {
-	if err := repository.ReturnClassByID(id); err != nil {
+	if err := repository.ReturnClassByID(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil

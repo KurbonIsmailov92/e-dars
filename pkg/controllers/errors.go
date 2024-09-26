@@ -18,14 +18,26 @@ func newErrorResponse(message string) ErrorResponse {
 }
 
 func handleError(c *gin.Context, err error) {
-	if errors.Is(err, errs.ErrUsernameUniquenessFailed) ||
-		errors.Is(err, errs.ErrIncorrectUsernameOrPassword) {
+	switch {
+	case errors.Is(err, errs.ErrUsernameUniquenessFailed),
+		errors.Is(err, errs.ErrIncorrectUsernameOrPassword),
+		errors.Is(err, errs.ErrIncorrectOldPassword),
+		errors.Is(err, errs.ErrFailedValidation):
 		c.JSON(http.StatusBadRequest, newErrorResponse(err.Error()))
-	} else if errors.Is(err, errs.ErrPermissionDenied) {
+
+	case errors.Is(err, errs.ErrPermissionDenied):
 		c.JSON(http.StatusForbidden, newErrorResponse(err.Error()))
-	} else if errors.Is(err, errs.ErrClassNotFound) {
+
+	case errors.Is(err, errs.ErrClassNotFound):
 		c.JSON(http.StatusNotFound, newErrorResponse(err.Error()))
-	} else {
+
+	case errors.Is(err, errs.ErrUserDeactivatedOrDeleted):
+		c.JSON(http.StatusForbidden, newErrorResponse(err.Error()))
+
+	case errors.Is(err, errs.ErrFailedSetTeacherToClass):
+		c.JSON(http.StatusInternalServerError, newErrorResponse(err.Error()))
+
+	default:
 		c.JSON(http.StatusInternalServerError, newErrorResponse(errs.ErrSomethingWentWrong.Error()))
 	}
 }

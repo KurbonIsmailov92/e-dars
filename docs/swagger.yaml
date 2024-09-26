@@ -307,10 +307,10 @@ paths:
     post:
       consumes:
       - application/json
-      description: sign in to account
+      description: Sign in to account
       operationId: sign-in-to-account
       parameters:
-      - description: sign-in info
+      - description: Username and Password
         in: body
         name: input
         required: true
@@ -342,7 +342,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: create account
+      description: Create account
       operationId: create-account
       parameters:
       - description: account info
@@ -406,7 +406,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: create new class
+      description: Create new class
       operationId: create-class
       parameters:
       - description: New Class info

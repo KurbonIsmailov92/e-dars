@@ -16,7 +16,7 @@
     "local_time": true
   },
   "app_params": {
-    "gin_mode": "debug",
+    "gin_mode": "release",
     "port_run": "8080",
     "server_url": "localhost",
     "server_name": "e-dars_service"

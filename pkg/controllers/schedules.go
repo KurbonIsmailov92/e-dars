@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"e-dars/errs"
 	"e-dars/internals/models"
 	"e-dars/logger"
 	"e-dars/pkg/service"
@@ -28,26 +29,21 @@ func CreateNewScheduleNote(c *gin.Context) {
 	var note models.Schedule
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to create a new schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 
 		return
 	}
 
 	if err := c.BindJSON(&note); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
 		return
 	}
 
 	if err := service.CreateNewScheduleNote(&note); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		handleError(c, err)
+		return
 	}
-	logger.Info.Printf("[controllers CreateNewScheduleNote] Note created successfully")
+	logger.Info.Printf("[controllers.CreateNewScheduleNote] Note created successfully")
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Note created successfully",
 	})
@@ -69,19 +65,18 @@ func CreateNewScheduleNote(c *gin.Context) {
 func GetAllScheduleNotes(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see all users",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	notes, err := service.GetAllScheduleNotes()
 
 	if err != nil {
-		c.JSON(http.StatusNoContent, gin.H{"massage": "No notes found"})
+		handleError(c, err)
+		return
 	}
 
-	logger.Info.Printf("[controllers] Successfully got all schedule notes")
+	logger.Info.Printf("[controllers.GetAllScheduleNotes] Successfully got all schedule notes")
 	c.JSON(http.StatusOK, gin.H{"Schedule Notes": notes})
 }
 
@@ -102,24 +97,22 @@ func GetScheduleNoteByID(c *gin.Context) {
 	scheduleNote := models.Schedule{}
 
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see a single schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Entered wrong id: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid schedule note ID"})
+		logger.Error.Printf("[controllers.GetScheduleNoteByID] Entered wrong id: %v", err)
+		handleError(c, err)
 		return
 	}
 
 	if scheduleNote, err = service.GetScheduleNoteByID(uint(id)); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"massage": "Schedule note not found"})
+		handleError(c, err)
 		return
 	}
-	logger.Info.Printf("[controllers] Successfully got schedule note")
+	logger.Info.Printf("[controllers.GetScheduleNoteByID] Successfully got schedule note")
 	c.JSON(http.StatusOK, gin.H{"Schedule note": scheduleNote})
 }
 
@@ -140,31 +133,31 @@ func GetScheduleNoteByID(c *gin.Context) {
 // @Router /schedules/api/v1/update/{id} [put]
 func UpdateScheduleNote(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to update Schedule Note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	var scheduleNote models.Schedule
 	if err := c.BindJSON(&scheduleNote); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		handleError(c, err)
+		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid schedule note ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid schedule note ID"})
+		logger.Error.Printf("[controllers.UpdateScheduleNote] Invalid schedule note ID: %v", err)
+		handleError(c, err)
 		return
 	}
 
 	scheduleNote.ID = uint(id)
 
-	if err := service.UpdateScheduleNoteByID(uint(id), scheduleNote); err != nil {
-		logger.Error.Printf("[controllers] Failed to update schedule note %v: %v", id, err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	if err = service.UpdateScheduleNoteByID(uint(id), scheduleNote); err != nil {
+		logger.Error.Printf("[controllers.UpdateScheduleNote] Failed to update schedule note %v: %v", id, err)
+		handleError(c, err)
+		return
 	}
-	logger.Info.Printf("[controllers UpdateScheduleNote] Successfully updated schedule note to %v", scheduleNote.ID)
+	logger.Info.Printf("[controllers.UpdateScheduleNote] Successfully updated schedule note to %v", scheduleNote.ID)
 	c.JSON(http.StatusOK, gin.H{"message": "Schedule note updated successfully"})
 
 }
@@ -185,25 +178,23 @@ func UpdateScheduleNote(c *gin.Context) {
 // @Router /schedules/api/v1/delete/{id} [delete]
 func DeleteScheduleNote(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "admin" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to delete schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		logger.Error.Printf("[controllers] Invalid schedule note ID: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid schedule note ID"})
+		logger.Error.Printf("[controllers.DeleteScheduleNote] Invalid schedule note ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	if err = service.DeleteScheduleNoteByID(uint(id)); err != nil {
-		logger.Error.Printf("[controllers] Failed to delete schedule note %v: %v", id, err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		logger.Error.Printf("[controllers.DeleteScheduleNote] Failed to delete schedule note %v: %v", id, err)
+		handleError(c, err)
 		return
 	}
-	logger.Info.Printf("[controllers DeleteScheduleNote] Successfully deleted schedule note to %v", id)
+	logger.Info.Printf("[controllers.DeleteScheduleNote] Successfully deleted schedule note to %v", id)
 	c.JSON(http.StatusOK, gin.H{"message": "Schedule note deleted successfully"})
 }
 
@@ -222,27 +213,28 @@ func DeleteScheduleNote(c *gin.Context) {
 // @Router /schedules/api/v1/teacher [post]
 func GetTeacherScheduleByDates(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "teacher" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see teachers schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
 		logger.Error.Printf("[controllers.GetTeacherScheduleByDates] Invalid ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	var dates models.ScheduleDates
 
-	if err := c.BindJSON(&dates); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err = c.BindJSON(&dates); err != nil {
+		handleError(c, err)
+		return
 	}
 
 	notes, err := service.GetTeacherScheduleByDates(uint(id), dates)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
+		return
 	}
 
 	logger.Info.Printf("[controller.GetTeacherScheduleByDates] Successfully got teacher`s schedule notes")
@@ -265,27 +257,27 @@ func GetTeacherScheduleByDates(c *gin.Context) {
 // @Router /schedules/api/v1/student [post]
 func GetStudentScheduleByDates(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "student" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see student schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
 		logger.Error.Printf("[controllers.GetStudentScheduleByDates] Invalid ID: %v", err)
+		handleError(c, errs.ErrFailedValidation)
 		return
 	}
 
 	var dates models.ScheduleDates
 
-	if err := c.BindJSON(&dates); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err = c.BindJSON(&dates); err != nil {
+		handleError(c, err)
+		return
 	}
 
 	notes, err := service.GetStudentScheduleByDates(uint(id), dates)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 	}
 
 	logger.Info.Printf("[controller.GetStudentScheduleByDates] Successfully got student`s schedule notes")
@@ -308,27 +300,28 @@ func GetStudentScheduleByDates(c *gin.Context) {
 // @Router /schedules/api/v1/parent [post]
 func GetParentScheduleByDates(c *gin.Context) {
 	if c.GetString(userRoleCtx) != "parent" {
-		c.JSON(http.StatusForbidden, gin.H{
-			"error": "You do not have permission to see parents schedule note",
-		})
+		handleError(c, errs.ErrPermissionDenied)
 		return
 	}
 
 	id, err := strconv.Atoi(c.GetString(userIDCtx))
 	if err != nil {
+		handleError(c, errs.ErrFailedValidation)
 		logger.Error.Printf("[controllers.GetParentScheduleByDates] Invalid ID: %v", err)
 		return
 	}
 
 	var dates models.ScheduleDates
 
-	if err := c.BindJSON(&dates); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err = c.BindJSON(&dates); err != nil {
+		handleError(c, err)
+		return
 	}
 
 	notes, err := service.GetParentScheduleByDates(uint(id), dates)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
+		return
 	}
 
 	logger.Info.Printf("[controller.GetParentScheduleByDates] Successfully got parent`s schedule notes")

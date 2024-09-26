@@ -10,7 +10,7 @@ import (
 // SignUp
 // @Summary SignUp
 // @Tags auth
-// @Description create account
+// @Description Create account
 // @ID create-account
 // @Accept json
 // @Produce json
@@ -39,11 +39,11 @@ func SignUp(c *gin.Context) {
 // SignIn
 // @Summary SignIn
 // @Tags auth
-// @Description sign in to account
+// @Description Sign in to account
 // @ID sign-in-to-account
 // @Accept json
 // @Produce json
-// @Param input body models.SignInInput true "sign-in info"
+// @Param input body models.SignInInput true "Username and Password"
 // @Success 200 {object} accessTokenResponse
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse

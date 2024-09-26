@@ -27,11 +27,6 @@ func ConnectToDb() error {
 	return nil
 }
 
-/*
-	func CloseDbConnection() error {
-		return nil
-	}
-*/
 func GetDBConnection() *gorm.DB {
 	return dbSession
 }

@@ -22,7 +22,7 @@ func CreateNewUser(u *models.User) error {
 
 	u.Password = utils.GenerateHash(u.Password)
 	err = repository.CreateNewUser(u)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 
@@ -31,7 +31,7 @@ func CreateNewUser(u *models.User) error {
 
 func GetAllUsers() (users []models.User, err error) {
 	users, err = repository.GetAllUsers()
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return nil, err
 	}
 	return users, nil
@@ -39,7 +39,7 @@ func GetAllUsers() (users []models.User, err error) {
 
 func GetUserByID(id uint) (user models.User, err error) {
 	user, err = repository.GetUserByID(id)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return user, err
 	}
 	return user, nil
@@ -47,41 +47,41 @@ func GetUserByID(id uint) (user models.User, err error) {
 
 func UpdateUser(id uint, user models.User) error {
 	existUser, err := repository.GetUserByID(id)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	user.Username = existUser.Username
 	user.Password = existUser.Password
 
-	if err = repository.UpdateUser(id, user, existUser); err != nil {
+	if err = repository.UpdateUser(id, user, existUser); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func DeActiveUser(id uint) error {
-	if err := repository.DeActiveUserByID(id); err != nil {
+	if err := repository.DeActiveUserByID(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func ActivateUser(id uint) error {
-	if err := repository.ActiveUserByID(id); err != nil {
+	if err := repository.ActiveUserByID(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func DeleteUser(id uint) error {
-	if err := repository.DeleteUserByID(id); err != nil {
+	if err := repository.DeleteUserByID(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func ReturnUser(id uint) error {
-	if err := repository.ReturnUserByID(id); err != nil {
+	if err := repository.ReturnUserByID(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
@@ -89,7 +89,7 @@ func ReturnUser(id uint) error {
 
 func ResetUserPassToDefault(id uint) error {
 	newPassword := utils.GenerateHash(os.Getenv("DEFAULT_USER_PASSWORD"))
-	if err := repository.ResetUserPasswordToDefault(id, newPassword); err != nil {
+	if err := repository.ResetUserPasswordToDefault(id, newPassword); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
@@ -97,21 +97,21 @@ func ResetUserPassToDefault(id uint) error {
 
 func ChangeOwnPasswordByUser(id uint, newPassword, oldPassword string) error {
 	user, err := GetUserByID(id)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 
 	oldPassword = utils.GenerateHash(oldPassword)
 
 	if oldPassword != user.Password {
-		logger.Error.Printf("[service ChangeOwnPasswordByUser] Incorrect old password")
-		err = errors.New("incorrect old password")
+		logger.Error.Printf("[service.ChangeOwnPasswordByUser] Incorrect old password")
+		err = errs.ErrIncorrectOldPassword
 		return err
 	}
 
 	newPassword = utils.GenerateHash(newPassword)
 
-	if err = repository.ChangeOwnPasswordByUser(id, newPassword); err != nil {
+	if err = repository.ChangeOwnPasswordByUser(id, newPassword); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 
@@ -119,7 +119,7 @@ func ChangeOwnPasswordByUser(id uint, newPassword, oldPassword string) error {
 }
 
 func SetAdminRoleToUser(id uint) error {
-	if err := repository.SetAdminRoleToUser(id); err != nil {
+	if err := repository.SetAdminRoleToUser(id); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
@@ -128,22 +128,23 @@ func SetAdminRoleToUser(id uint) error {
 func SetParentToUser(userid, parenID uint) error {
 
 	parent, err := repository.GetUserByID(parenID)
-	if err != nil {
+	if err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 
 	if parent.RoleCode != "parent" {
-		return errors.New("user is not a parent")
+		err = errs.ErrPermissionDenied
+		return err
 	}
 
-	if err := repository.SetParentToUser(userid, parenID); err != nil {
+	if err = repository.SetParentToUser(userid, parenID); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil
 }
 
 func SetRoleToUser(userid uint, roleCode string) error {
-	if err := repository.SetRoleToUser(userid, roleCode); err != nil {
+	if err := repository.SetRoleToUser(userid, roleCode); err != nil && !errors.Is(err, errs.ErrRecordNotFound) {
 		return err
 	}
 	return nil

@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/auth/api/v1/sign-in": {
             "post": {
-                "description": "sign in to account",
+                "description": "Sign in to account",
                 "consumes": [
                     "application/json"
                 ],
@@ -31,7 +31,7 @@ const docTemplate = `{
                 "operationId": "sign-in-to-account",
                 "parameters": [
                     {
-                        "description": "sign-in info",
+                        "description": "Username and Password",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -70,7 +70,7 @@ const docTemplate = `{
         },
         "/auth/api/v1/sign-up": {
             "post": {
-                "description": "create account",
+                "description": "Create account",
                 "consumes": [
                     "application/json"
                 ],
@@ -173,7 +173,7 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "create new class",
+                "description": "Create new class",
                 "consumes": [
                     "application/json"
                 ],

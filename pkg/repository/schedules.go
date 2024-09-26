@@ -9,7 +9,8 @@ import (
 func CreateNewScheduleNote(scheduleNote *models.Schedule) (err error) {
 	if err = db.GetDBConnection().
 		Create(scheduleNote).Error; err != nil {
-		logger.Error.Printf("[repository CreateNewScheduleNote] Failed to create new schedule note: %v", err)
+		logger.Error.Printf("[repository.CreateNewScheduleNote] Failed to create new schedule note: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -21,8 +22,8 @@ func GetAllScheduleNotes() (schedules []models.Schedule, err error) {
 		Preload("Group").
 		Find(&schedules).Error
 	if err != nil {
-		logger.Error.Printf("[repository GetAllScheduleNotes] Error getting all notes: %v", err)
-		return nil, err
+		logger.Error.Printf("[repository.GetAllScheduleNotes] Error getting all notes: %v", err)
+		return nil, translateError(err)
 	}
 	return schedules, nil
 }
@@ -41,25 +42,24 @@ func GetScheduleNoteByID(noteID uint) (note models.Schedule, err error) {
 }
 
 func UpdateScheduleNoteByID(id uint, note, noteFromDB models.Schedule) (err error) {
-	if err := db.GetDBConnection().
+	if err = db.GetDBConnection().
 		Model(&noteFromDB).
 		Updates(note).
 		Where("id = ?", id).Error; err != nil {
-		logger.Error.Printf("[repository UpdateScheduleNoteByID] Error updating Schedule Note: %v", err)
-		return err
+		logger.Error.Printf("[repository.UpdateScheduleNoteByID] Error updating Schedule Note: %v", err)
+		return translateError(err)
 	}
 
 	return nil
 }
 
 func DeleteScheduleNoteByID(id uint) error {
-
 	err := db.GetDBConnection().
 		Model(&models.Schedule{}).
 		Where("id = ?", id).
 		Delete(&models.Schedule{}).Error
 	if err != nil {
-		logger.Error.Printf("[repository DeleteScheduleNoteByID] Error deleting schedule note: %v", err)
+		logger.Error.Printf("[repository.DeleteScheduleNoteByID] Error deleting schedule note: %v", err)
 		return translateError(err)
 	}
 	return nil

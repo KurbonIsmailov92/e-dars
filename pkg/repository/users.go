@@ -59,8 +59,8 @@ func GetAllUsers() (users []models.User, err error) {
 		Preload("Group").
 		Find(&users).Error
 	if err != nil {
-		logger.Error.Printf("[repository] Error getting all users: %v", err)
-		return nil, err
+		logger.Error.Printf("[repository.GetAllUsers] Error getting all users: %v", err)
+		return nil, translateError(err)
 	}
 	return users, nil
 }
@@ -73,8 +73,8 @@ func GetUserByID(id uint) (user models.User, err error) {
 		Preload("Group").
 		First(&user).Error
 	if err != nil {
-		logger.Error.Printf("[repository] Error getting user: %v", err)
-		return user, err
+		logger.Error.Printf("[repository.GetUserByID] Error getting user: %v", err)
+		return user, translateError(err)
 	}
 	return user, nil
 }
@@ -84,8 +84,8 @@ func UpdateUser(id uint, user, existUser models.User) error {
 		Model(&existUser).
 		Updates(user).
 		Where("id = ?", id).Error; err != nil {
-		logger.Error.Printf("[repository UpdateUser] Error updating user: %v", err)
-		return err
+		logger.Error.Printf("[repository.UpdateUser] Error updating user: %v", err)
+		return translateError(err)
 	}
 
 	return nil
@@ -99,8 +99,8 @@ func DeActiveUserByID(id uint) error {
 			"is_active":      false,
 			"deactivated_at": time.Now(),
 		}).Error; err != nil {
-		logger.Error.Printf("[repository DeActivateUserByID] Error deactivating user: %v", err)
-		return err
+		logger.Error.Printf("[repository.DeActivateUserByID] Error deactivating user: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -113,8 +113,8 @@ func ActiveUserByID(id uint) error {
 			"is_active":      true,
 			"deactivated_at": nil,
 		}).Error; err != nil {
-		logger.Error.Printf("[repository ActivateUserByID] Error activating user: %v", err)
-		return err
+		logger.Error.Printf("[repository.ActivateUserByID] Error activating user: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -127,8 +127,8 @@ func DeleteUserByID(id uint) error {
 			"is_deleted": true,
 			"deleted_at": time.Now(),
 		}).Error; err != nil {
-		logger.Error.Printf("[repository DeleteUserByID] Error deleting user: %v", err)
-		return err
+		logger.Error.Printf("[repository.DeleteUserByID] Error deleting user: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -141,8 +141,8 @@ func ReturnUserByID(id uint) error {
 			"is_deleted": false,
 			"deleted_at": nil,
 		}).Error; err != nil {
-		logger.Error.Printf("[repository ReturnUserByID] Error returning user: %v", err)
-		return err
+		logger.Error.Printf("[repository.ReturnUserByID] Error returning user: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -154,8 +154,8 @@ func ResetUserPasswordToDefault(id uint, newPassword string) error {
 		Updates(map[string]interface{}{
 			"password": newPassword,
 		}).Error; err != nil {
-		logger.Error.Printf("[repository ResetUserPasswordByID] Error reseting User`s password: %v", err)
-		return err
+		logger.Error.Printf("[repository.ResetUserPasswordByID] Error reseting User`s password: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -167,8 +167,8 @@ func ChangeOwnPasswordByUser(id uint, newPassword string) error {
 		Updates(map[string]interface{}{
 			"password": newPassword,
 		}).Error; err != nil {
-		logger.Error.Printf("[repository ResetUserPasswordByUser] Error reseting User`s password: %v", err)
-		return err
+		logger.Error.Printf("[repository.ResetUserPasswordByUser] Error reseting User`s password: %v", err)
+		return translateError(err)
 	}
 	return nil
 }
@@ -176,7 +176,7 @@ func ChangeOwnPasswordByUser(id uint, newPassword string) error {
 func GetTeacherIDFromDB(classID uint) (teacherID uint, err error) {
 	if err = db.GetDBConnection().Raw(db.GetTeacherIDDB, classID).First(&teacherID).Error; err != nil {
 		logger.Error.Printf("[repository.GetTeacherIDFromDB] error getting teacher id: %v", err)
-		return teacherID, err
+		return teacherID, translateError(err)
 	}
 	return teacherID, nil
 }
@@ -189,7 +189,7 @@ func SetAdminRoleToUser(id uint) error {
 			"role_code": "admin",
 		}).Error; err != nil {
 		logger.Error.Printf("[repository.SetAdminRoleToUser] Error setting Admin role to user: %v", err)
-		return err
+		return translateError(err)
 	}
 	return nil
 }
@@ -202,7 +202,7 @@ func SetParentToUser(userID, parentID uint) error {
 			"parent_id": parentID,
 		}).Error; err != nil {
 		logger.Error.Printf("[repository.SetParentToUser] Error setting Parent to user: %v", err)
-		return err
+		return translateError(err)
 	}
 	return nil
 }
@@ -215,7 +215,7 @@ func SetRoleToUser(userID uint, roleCode string) error {
 			"role_code": roleCode,
 		}).Error; err != nil {
 		logger.Error.Printf("[repository.SetRoleToUser] Error setting Role to user: %v", err)
-		return err
+		return translateError(err)
 	}
 	return nil
 }
