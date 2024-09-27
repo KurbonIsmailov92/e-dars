@@ -277,7 +277,7 @@ func DeleteUser(c *gin.Context) {
 // @Failure 400 404 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Failure default {object} ErrorResponse
-// @Router /users/api/v1/{id} [delete]
+// @Router /users/api/v1/return/{id} [delete]
 func ReturnUser(c *gin.Context) {
 
 	if c.GetString(userRoleCtx) != "admin" {

@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 func InitRoutes() *gin.Engine {
@@ -90,11 +91,11 @@ func InitRoutes() *gin.Engine {
 // @Router /ping [get]
 func PingPong(c *gin.Context) {
 
-	filename := "logo.jpg"
-	filepath := "./uploads/" + filename
-	c.File(filepath)
+	//filename := "logo.jpg"
+	//filepath := "./uploads/" + filename
+	//c.File(filepath)
 
-	/*c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"answer": []string{
 			" ███████      ██████   █████  ██████   ██████ ",
 			" ██           ██   ██ ██   ██ ██   ██ ██      ",
@@ -102,5 +103,5 @@ func PingPong(c *gin.Context) {
 			" ██           ██   ██ ██   ██ ██   ██      ██ ",
 			" ███████      ██████  ██   ██ ██   ██ ██████  ",
 		},
-	})*/
+	})
 }

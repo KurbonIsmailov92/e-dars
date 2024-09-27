@@ -1229,41 +1229,6 @@ paths:
       tags:
       - users
   /users/api/v1/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Return user by ID
-      operationId: return-user
-      parameters:
-      - description: id of the user
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controllers.defaultResponse'
-        "400":
-          description: Bad Request
-          schema:
-            type: "404"
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/controllers.ErrorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/controllers.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Return user by ID
-      tags:
-      - users
     get:
       description: get user by ID
       operationId: get-user-by-id
@@ -1479,6 +1444,42 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Reset user`s password to default by ID
+      tags:
+      - users
+  /users/api/v1/return/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Return user by ID
+      operationId: return-user
+      parameters:
+      - description: id of the user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.defaultResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: "404"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Return user by ID
       tags:
       - users
   /users/api/v1/set-admin/{id}:

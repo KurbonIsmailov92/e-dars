@@ -1,0 +1,7 @@
+ERROR: 2024/09/26 17:17:25 users.go:27: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/26 19:21:06 users.go:27: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/26 19:21:14 users.go:27: [repository.GetUserByUsernameAndPassword] error getting user by username and password: record not found
+ERROR: 2024/09/26 19:22:19 users.go:39: [repository.GetUserByUsername] error getting user by username: record not found
+ERROR: 2024/09/26 19:22:19 users.go:47: [repository.CreateUser] cannot create user. Error is: ОШИБКА: INSERT или UPDATE в таблице "users" нарушает ограничение внешнего ключа "fk_users_role" (SQLSTATE 23503)
+ERROR: 2024/09/26 19:22:37 users.go:39: [repository.GetUserByUsername] error getting user by username: record not found
+ERROR: 2024/09/26 19:22:37 users.go:47: [repository.CreateUser] cannot create user. Error is: ОШИБКА: INSERT или UPDATE в таблице "users" нарушает ограничение внешнего ключа "fk_users_role" (SQLSTATE 23503)
